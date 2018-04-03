@@ -40,14 +40,13 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="~/image/avatar5.png" class="user-image" alt="User Image">
-                                <span id="name-r" class="hidden-xs">Admin</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="rigth-menu">
-                                    <a href="/change-pass">เปลี่ยนรหัสผ่าน</a>
+                                <li class="rigth-menu" style="padding:5px 5px;">
+                                    <a href="/change-pass">Profile</a>
                                 </li>
-                                <li class="rigth-menu">
-                                    <a href="/logout">ออกจากระบบ</a>
+                                <li class="rigth-menu" style="padding:5px 5px;">
+                                    <a href="/logout">Logout</a>
                                 </li>
                             </ul>
                         </li>
@@ -100,7 +99,7 @@
                             </li>
                             <li>
                                 <a href="~/pm/ticket/list">
-                                    <i class="fa fa-circle-o"></i> Ticket list 
+                                    <i class="fa fa-circle-o"></i> Ticket list
                                 </a>
                             </li>
                         </ul>
@@ -126,7 +125,7 @@
                             </li>
                             <li>
                                 <a href="/pickup/list">
-                                    <i class="fa fa-circle-o"></i>Pick up
+                                    <i class="fa fa-circle-o"></i>Picking up
                                 </a>
                             </li>
                             <li>
@@ -187,6 +186,11 @@
                                     <i class="fa fa-circle-o"></i> Setting
                                 </a>
                             </li>
+                            <li>
+                                <a href="/master">
+                                    <i class="fa fa-circle-o"></i> Master Data
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -199,10 +203,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.0.0
             </div>
-            <strong>
-                Copyright &copy; 2018
-                <a href="#">FixitTH</a>.
-            </strong> All rights reserved.
+            <strong> Copyright &copy; 2018 <a href="#">FixitTH</a>. </strong> All rights reserved.
         </footer>
     </div>
     <div class="modal modal-default fade" id="delete-global-modal">
@@ -220,12 +221,12 @@
                 <div class="modal-body">
                     <div class="alert alert-danger fade in no-margin" style="display:none" id="global-delete-alert">
                     </div>
-                    <p>ท่านกำลังจะลบข้อมูล, จะดำเนินการต่อหรือไม่?</p>
+                    <p>Do you want to delete?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> Cancel </button>
                     <button type="button" onclick="deleteGlobal()" class="btn btn-warning">
-                        <i class="fa fa-trash-o"></i> Delete
+                        <i class="fa fa-trash-o"></i> Yes
                     </button>
                 </div>
             </div>
