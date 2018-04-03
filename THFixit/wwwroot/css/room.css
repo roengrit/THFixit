@@ -7,4 +7,7 @@
 .skin-black-light .main-header .navbar .navbar-custom-menu .navbar-nav>li>a, .skin-black-light .main-header .navbar .navbar-right>li>a{
     border-left: none; 
 }
+.skin-purple-light .main-header .navbar .dropdown-menu li a {
+    color:black;
+}
 
