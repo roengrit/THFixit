@@ -3,69 +3,265 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - THFixit</title>
-
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewData["Title"] - FixitTH</title>
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="shortcut icon" type="image/png" href="~/image/favicon.png" />
+        <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="~/css/ionicon/css/ionicons.min.css">
+        <link rel="stylesheet" href="~/css/daterange/daterangepicker.css">
+        <link rel="stylesheet" href="~/css/datepicker/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="~/css/timepicker/bootstrap-timepicker.min.css">
+        <link rel="stylesheet" href="~/css/select2/select2.min.css" />
+        <link rel="stylesheet" href="~/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="~/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="~/css/room.css">
+        <script src="~/js/jquery.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
     </environment>
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<body class="sidebar-collapse sidebar-mini skin-purple-light">
+    <div class="wrapper">
+        <header class="main-header">
+            <a href="/" class="logo">
+                <span class="logo-mini">Fix</span>
+                <span class="logo-lg">FixitTH</span>
+            </a>
+            <nav class="navbar navbar-static-top">
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">THFixit</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/image/avatar5.png" class="user-image" alt="User Image">
+                                <span id="name-r" class="hidden-xs">Admin</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="rigth-menu">
+                                    <a href="/change-pass">เปลี่ยนรหัสผ่าน</a>
+                                </li>
+                                <li class="rigth-menu">
+                                    <a href="/logout">ออกจากระบบ</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i>
+                            <span>RM</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left  pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="~/rm/ticket">
+                                    <i class="fa fa-circle-o"></i>Ticket
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/rm/ticket/list">
+                                    <i class="fa fa-circle-o"></i>Ticket list
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-calendar"></i>
+                            <span>PM</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="~/pm/plan">
+                                    <i class="fa fa-circle-o"></i> Plan
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/pm/ticket">
+                                    <i class="fa fa-circle-o"></i> Ticket
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/pm/ticket/list">
+                                    <i class="fa fa-circle-o"></i> Ticket list 
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa  fa-cubes"></i>
+                            <span>Stock</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/product/list">
+                                    <i class="fa fa-circle-o"></i>Product/Machine
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/pickup/list">
+                                    <i class="fa fa-circle-o"></i>Pick up
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/stock/list">
+                                    <i class="fa fa-circle-o"></i>Stock Count
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-line-chart"></i>
+                            <span>Report</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i> Report
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i>
+                            <span>User/Role</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="../forms/general.html">
+                                    <i class="fa fa-circle-o"></i> User
+                                </a>
+                            </li>
+                            <li class="{{.m_role_list}}">
+                                <a href="/normal/?entity=roles">
+                                    <i class="fa fa-circle-o"></i>Role
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview {{.m_setting}}">
+                        <a href="#">
+                            <i class="fa fa-gear"></i>
+                            <span>Setting</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/setting">
+                                    <i class="fa fa-circle-o"></i> Setting
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-            </div>
+            </section>
+        </aside>
+        <div class="content-wrapper">
+            @RenderBody()
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2561 - THFixit</p>
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0.0
+            </div>
+            <strong>
+                Copyright &copy; 2018
+                <a href="#">FixitTH</a>.
+            </strong> All rights reserved.
         </footer>
     </div>
+    <div class="modal modal-default fade" id="delete-global-modal">
+        <div class="modal-dialog">
+            <div class="modal-content" id="delete-global-modal-content" style=" border-radius: 8px; ">
+                <input type="hidden" id="global-delete-id" name="global-delete-id" />
+                <input type="hidden" id="global-delete-url" name="global-delete-url" />
+                <input type="hidden" id="global-delete-xsrf" name="global-delete-xsrf" />
+                <div class="modal-header alert-danger" style=" border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title ">Confirm Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger fade in no-margin" style="display:none" id="global-delete-alert">
+                    </div>
+                    <p>ท่านกำลังจะลบข้อมูล, จะดำเนินการต่อหรือไม่?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+                    <button type="button" onclick="deleteGlobal()" class="btn btn-warning">
+                        <i class="fa fa-trash-o"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-default fade" id="room-global-modal">
+        <div class="modal-dialog" style="height: 100%;width:55%">
+            <div class="modal-content" style=" border-radius: 8px; ">
+                <div id="showroom">
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-default fade" id="reserve-global-modal">
+        <div class="modal-dialog" style="height: 100%;width:55%">
+            <div class="modal-content" style=" border-radius: 8px; ">
+                <div id="reserve">
+
+                </div>
+            </div>
+        </div>
+    </div>
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/select2/select2.min.js"></script>
+        <script src="~/js/jquery.slimscroll.min.js"></script>
+        <script src="~/js/fastclick.js"></script>
+        <script src="~/js/moment/moment.js"></script>
+        <script src="~/js/daterange/daterangepicker.js"></script>
+        <script src="~/js/timepicker/js/bootstrap-timepicker.js"></script>
+        <script src="~/js/adminlte.min.js"></script>
+        <script src="~/js/room.js"></script>
     </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-
     @RenderSection("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('.sidebar-menu').tree();
+        })
+    </script>
 </body>
 </html>
+
+
+
