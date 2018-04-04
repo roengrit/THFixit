@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.4.0" />
+    <PackageReference Include="Dapper" Version="1.50.4" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
   </ItemGroup>
 
@@ -816,6 +819,10 @@
     <None Include="wwwroot\js\select2\select2.min.js" />
     <None Include="wwwroot\js\timepicker\js\bootstrap-timepicker.js" />
     <None Include="wwwroot\js\timepicker\js\bootstrap-timepicker.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

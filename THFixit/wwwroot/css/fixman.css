@@ -10,4 +10,7 @@
 .skin-purple-light .main-header .navbar .dropdown-menu li a {
     color:black;
 }
+.login-err {
+    color:red;
+}
 

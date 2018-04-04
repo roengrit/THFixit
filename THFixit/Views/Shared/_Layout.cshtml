@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var UserImage = User.Claims.FirstOrDefault(x => x.Type == "UserImage")?.Value;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,7 +19,7 @@
         <link rel="stylesheet" href="~/css/select2/select2.min.css" />
         <link rel="stylesheet" href="~/css/AdminLTE.min.css">
         <link rel="stylesheet" href="~/css/skins/_all-skins.min.css">
-        <link rel="stylesheet" href="~/css/room.css">
+        <link rel="stylesheet" href="~/css/fixman.css">
         <script src="~/js/jquery.min.js"></script>
         <script src="~/js/bootstrap.min.js"></script>
     </environment>
@@ -39,14 +42,19 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="~/image/avatar5.png" class="user-image" alt="User Image">
+                                <img src="@UserImage" class="user-image" alt="User Image">
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="rigth-menu" style="padding:5px 5px;">
-                                    <a href="/change-pass">Profile</a>
+                                    <a href="/change-pass">
+                                        Profile @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <span>[</span> @User.Identity.Name <span>]</span>
+                                        }
+                                    </a>
                                 </li>
                                 <li class="rigth-menu" style="padding:5px 5px;">
-                                    <a href="/logout">Logout</a>
+                                    <a href="/Auth/SignOut">SignOut</a>
                                 </li>
                             </ul>
                         </li>
