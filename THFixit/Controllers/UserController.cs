@@ -34,7 +34,7 @@ namespace THFixit.Controllers
             classRepo = new ClassRepo(this.configuration);
             roomRepo = new RoomRepo(this.configuration);
         }
-   
+        [Authorize]
         public IActionResult Profile(ProfileView user)
         {
             var userRepo = new UserRepo(this.configuration);
@@ -49,6 +49,7 @@ namespace THFixit.Controllers
             user.Tel = userEdit.Tel;
             user.Email = userEdit.Email;
             user.Image = userEdit.ImageAvatar;
+            user.Ret = new Ret { };
             return View(user);
         }
          

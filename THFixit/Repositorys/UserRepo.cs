@@ -86,7 +86,7 @@ namespace THFixit.Models
                                                      class_id = user.ClassId,
                                                  });
                 dbConnection.Close();
-                return new Ret { Ok = true };
+                return new Ret { Ok = true , Messsage = "Success" };
             }
             catch (Exception ex)
             {

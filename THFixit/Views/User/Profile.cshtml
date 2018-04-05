@@ -81,6 +81,27 @@
     }
 </style>
 <section class="content-header">
+    @if (Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    {
+        <div id="top-alert">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Messsage
+            </div>
+            <script>
+               $('#top-alert').fadeOut(1000);
+            </script>
+        </div>
+    }
+    else if (!Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    {
+        <div id="top-alert">
+            <div class="alert  alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Messsage
+            </div>
+        </div>
+    }
     <h1 id="title-content">
         Profile
     </h1>
@@ -94,9 +115,9 @@
                     <div class="row">
                         <div class="gallery" style="text-align:center;">
                             <figure class="img-wrap veiw-figure">
-                                <span class="close-x" data="1">
+                                @*<span class="close-x" data="1">
                                     <i class="fa fa-trash"></i>
-                                </span>
+                                </span>*@
                                 <span class="add-x" v data="1">
                                     <i class="fa fa-plus"></i>
                                 </span>
@@ -400,11 +421,7 @@
                 $('.user-image').attr('src', ret.imagePath);
                 localStorage.setItem('avatar', ret.imagePath);
             }
-        }
-
-        function successHandler(event) {
-            
-        }
+        } 
 
         function errorHandler(event) {
             _("progressBar").value = 0;  
@@ -419,6 +436,9 @@
         }
         if ($('#BuildingId').val() == '') {
             PopulateBuilding();
-         }
+        }
+        if ($('.img-avatar').attr('src')=='') {
+            $('.img-avatar').attr('src','/image/avatar5.png')
+        }
     </script>
 }
