@@ -5,40 +5,39 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using THFixit.Models;
-
+using THFixit.Models.Model;
 namespace THFixit.Repositorys
 {
-    public class RoleRepo : IDisposable
+    public class BuildingRepo : IDisposable
     {
         private IDbConnection dbConnection;
 
-        public RoleRepo(string connectionString)
+        public BuildingRepo(string connectionString)
         {
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
             dbConnection = new NpgsqlConnection(connectionString);
         }
 
-        public IEnumerable<Role> GetAll()
+        public IEnumerable<Building> GetAll(int branchId)
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.Query<Role>("select * from roles");
+            var ret = dbConnection.Query<Building>("select * from buildings where branch_id = @branch_id", new { branch_id = branchId });
             dbConnection.Close();
             return ret;
         }
 
-        public Role FindById(int id)
+        public IEnumerable<Building> GetAllActive(int branchId)
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.QueryFirstOrDefault<Role>("select * from roles where id = @id;", new { id = id });
+            var ret = dbConnection.Query<Building>("select * from buildings where active = true and branch_id =@branch_id", new { branch_id = branchId });
             dbConnection.Close();
             return ret;
         }
 
-        public IEnumerable<RoleAccess> FindAcessAllByRoleId(int id)
+        public Building FindById(int id)
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.Query<RoleAccess>("select * from role_access where role_id = @id;", new { id = id });
+            var ret = dbConnection.QueryFirstOrDefault<Building>("select * from buildings where id = @id;", new { id = id });
             dbConnection.Close();
             return ret;
         }

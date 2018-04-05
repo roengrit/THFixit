@@ -13,14 +13,14 @@ namespace THFixit.Controllers
 {
     public class AuthController : Controller
     {
-        public IConfiguration configuration { get; set; }
+        public string configuration { get; set; }
 
         public AuthController(IConfiguration configuration)
         {
-            this.configuration = configuration;
+            this.configuration = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public IActionResult Index(Login login)
+        public IActionResult Index(LoginView login)
         {
             login.Ret.Ok = true;
             login.Ret.Messsage = "Sign In";
@@ -28,9 +28,9 @@ namespace THFixit.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(Login login,string href)
+        public async Task<IActionResult> Index(LoginView login,string href)
         {
-            UserRepo userRepo = new UserRepo(configuration.GetConnectionString("DefaultConnection"));
+            UserRepo userRepo = new UserRepo(this.configuration);
             var user = userRepo.FindByUser(login.Username);
             if (user != null)
             {
@@ -38,13 +38,12 @@ namespace THFixit.Controllers
                 {
                     user.Role = userRepo.RoleRepo.FindById(user.RoleId);
                     user.ListAccess = userRepo.RoleRepo.FindAcessAllByRoleId(user.RoleId);
-                    var CanAccess = string.Join(",", user.ListAccess.Where(x => x.Active).Select(x => x.MenuId).ToArray());
-
+                    var CanAccess = user.ListAccess.Count() > 0 ? "(" + string.Join(",", user.ListAccess.Where(x => x.Active).Select(x => x.MenuId).ToArray()) + ")" : "";
                     List<Claim> claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.Name),
                         new Claim(ClaimTypes.Email, user.Username),
-                        new Claim("UserImage", user.Name.Contains("admin")? "/image/matureman.png": string.IsNullOrEmpty(user.Image)? "/image/avatar5.png" : user.Image),
+                        new Claim("ImageAvatar", user.Name.Contains("admin")? "/image/matureman.png": string.IsNullOrEmpty(user.ImageAvatar)? "/image/avatar5.png" : user.ImageAvatar),
                         new Claim("RoleId",user.RoleId.ToString()),
                         new Claim("RoleName",user.Role.Name),
                         new Claim("CanAccess",CanAccess),
@@ -53,6 +52,8 @@ namespace THFixit.Controllers
                     ClaimsIdentity identity = new ClaimsIdentity(claims, "cookie");
                     ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(scheme: "Fixman", principal: principal);
+
+                    userRepo.Dispose();
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -66,6 +67,7 @@ namespace THFixit.Controllers
                 login.Ret.Ok = false;
                 login.Ret.Messsage = "Username or password is wrong";
             }
+            userRepo.Dispose();
             return View("Index", login);
         }
 

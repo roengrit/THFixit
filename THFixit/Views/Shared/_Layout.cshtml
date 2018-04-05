@@ -1,5 +1,5 @@
 ﻿@{
-    var UserImage = User.Claims.FirstOrDefault(x => x.Type == "UserImage")?.Value;
+    var ImageAvatar = User.Claims.FirstOrDefault(x => x.Type == "ImageAvatar")?.Value;
 }
 <!DOCTYPE html>
 <html>
@@ -42,19 +42,19 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="@UserImage" class="user-image" alt="User Image">
+                                <img src="@ImageAvatar" class="user-image" alt="User Image">
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="rigth-menu" style="padding:5px 5px;">
-                                    <a href="/change-pass">
+                                <li class="rigth-menu" style="padding:2px 2px;">
+                                    <a style="padding:5px 5px;" href="/User/Profile">
                                         Profile @if (User.Identity.IsAuthenticated)
-                                        {
-                                            <span>[</span> @User.Identity.Name <span>]</span>
-                                        }
+                                                 {
+                                                    <span>[</span> @User.Identity.Name <span>]</span>
+                                                 }
                                     </a>
-                                </li>
-                                <li class="rigth-menu" style="padding:5px 5px;">
-                                    <a href="/Auth/SignOut">SignOut</a>
+                                </li>                                
+                                <li class="rigth-menu" style="padding:2px 2px;">
+                                    <a style="padding:5px 5px;" href="/Auth/SignOut">Sign Out</a>
                                 </li>
                             </ul>
                         </li>
@@ -270,9 +270,32 @@
     </environment>
     @RenderSection("Scripts", required: false)
     <script>
+        String.prototype.format = function (args) {
+            var str = this;
+            return str.replace(String.prototype.format.regex, function (item) {
+                var intVal = parseInt(item.substring(1, item.length - 1));
+                var replace;
+                if (intVal >= 0) {
+                    replace = args[intVal];
+                } else if (intVal === -1) {
+                    replace = "{";
+                } else if (intVal === -2) {
+                    replace = "}";
+                } else {
+                    replace = "";
+                }
+                return replace;
+            });
+        };
+        String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
         $(document).ready(function () {
             $('.sidebar-menu').tree();
         })
+        if (localStorage.getItem('avatar') == '') {
+            $('.user-image').attr('src', '@ImageAvatar');
+        } else {
+            $('.user-image').attr('src', localStorage.getItem('avatar'));
+        }
     </script>
 </body>
 </html>

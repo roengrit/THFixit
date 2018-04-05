@@ -1,4 +1,4 @@
-﻿@model THFixit.Models.Login
+﻿@model THFixit.Models.LoginView
 
 @{
     Layout = null;
@@ -61,6 +61,7 @@
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
             });
+            localStorage.setItem('avatar', '');
         });
     </script>
 </body>

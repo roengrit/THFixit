@@ -5,40 +5,40 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using THFixit.Models;
+using THFixit.Models.Model;
 
 namespace THFixit.Repositorys
 {
-    public class RoleRepo : IDisposable
+    public class DepartRepo : IDisposable
     {
         private IDbConnection dbConnection;
 
-        public RoleRepo(string connectionString)
+        public DepartRepo(string connectionString)
         {
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
             dbConnection = new NpgsqlConnection(connectionString);
         }
 
-        public IEnumerable<Role> GetAll()
+        public IEnumerable<Department> GetAll()
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.Query<Role>("select * from roles");
+            var ret = dbConnection.Query<Department>("select * from departments");
             dbConnection.Close();
             return ret;
         }
 
-        public Role FindById(int id)
+        public IEnumerable<Department> GetAllActive()
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.QueryFirstOrDefault<Role>("select * from roles where id = @id;", new { id = id });
+            var ret = dbConnection.Query<Department>("select * from departments where active = true");
             dbConnection.Close();
             return ret;
         }
 
-        public IEnumerable<RoleAccess> FindAcessAllByRoleId(int id)
+        public Department FindById(int id)
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.Query<RoleAccess>("select * from role_access where role_id = @id;", new { id = id });
+            var ret = dbConnection.QueryFirstOrDefault<Department>("select * from departments where id = @id;", new { id = id });
             dbConnection.Close();
             return ret;
         }

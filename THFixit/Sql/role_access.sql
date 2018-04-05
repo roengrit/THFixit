@@ -9,7 +9,7 @@ CACHE 1;
 DROP TABLE IF EXISTS "public"."role_access";
 CREATE TABLE "public"."role_access" (
   "id" int4 NOT NULL DEFAULT nextval('role_access_id_seq'::regclass),
-  "lock" bool NOT NULL DEFAULT false,   
+  "is_lock" bool NOT NULL DEFAULT false,   
   "role_id" int4,
 	"menu_id" int4,
   "active" bool NOT NULL DEFAULT false,

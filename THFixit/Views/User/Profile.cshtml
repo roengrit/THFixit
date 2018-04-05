@@ -2,23 +2,23 @@
     ViewData["Title"] = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model THFixit.Models.ModelView.ProfileView
 <style>
-        .form-group {
-            clear: both;
-            margin-bottom: 80px;
-        }
+    .form-group {
+        clear: both;
+        margin-bottom: 80px;
+    }
 
-        input.largerCheckbox {
-            width: 20px;
-            height: 20px;
-        }
+    input.largerCheckbox {
+        width: 20px;
+        height: 20px;
+    }
 
-        .img-wrap {
-            position: relative;
-            display: inline-block;
-            font-size: 0;
-        }
+    .img-wrap {
+        position: relative;
+        display: inline-block;
+        font-size: 0;
+    }
 
         .img-wrap .close-x {
             position: absolute;
@@ -64,142 +64,43 @@
 </style>
 <link rel="stylesheet" href="~/css/gallory/gallory.css">
 <style>
- 
+    .gallery figure {
+        flex-basis: unset;
+    }
+
+        .gallery figure img {
+            width: unset;
+            border-radius: 50%;
+            max-height: 215px;
+            max-width: 215px;
+        }
+
+    .veiw-figure {
+        display: block;
+        margin: 0 auto;
+    }
 </style>
 <section class="content-header">
-    <h1 id="title-content"> 
+    <h1 id="title-content">
         Profile
     </h1>
 </section>
 <section class="content">
-    <form enctype="multipart/form-data" id="create-form" method="post">
-        <input type="hidden" id="ID" name="ID" value="" />
-        <input type="hidden" id="DeleteImage1" name="DeleteImage1" value="0" />
-        <input type='file' id="imagePath1" name="imagePath1" style="display:none;" />
+    <form enctype="multipart/form-data" id="create-form" method="post"> 
+        <input type='file' id="imageAvatar" name="imageAvatar" style="display:none;" />
         <div id="box-req" class="box box-primary">
             <div class="box-body">
-                <div class="row">
-                    <div class="form-group req-box-form">
-                        <div class="col-xs-12">
-                            <label for="req-name">Full Name</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <input type="text" id="Name" required name="Name" class="form-control" autocomplete="off" placeholder="Full Name" value="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group req-box-form">
-                        <div class="col-xs-12">
-                            <label for="req-name">Username</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <input type="text" id="Username" required name="Username" class="form-control"  autocomplete="off" placeholder="Username" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group req-box-form">
-                        <div class="col-xs-12">
-                            <label for="req-name">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <input type="password" id="Password" name="Password" class="form-control" autocomplete="off" placeholder="Password">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group req-box-form">
-                        <div class="col-xs-12">
-                            <label for="req-name">Retry Password</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <input type="password" id="RePassword" name="RePassword" class="form-control" autocomplete="off" placeholder="Retry Password">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group req-box-form">
-                        <div class="col-xs-12">
-                            <label for="req-name">Department</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <input type="text" id="Depart" name="Depart" class="form-control" autocomplete="off" placeholder="Department"
-                                       value="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group req-box-form">
-                        <div class="col-xs-6">
-                            <label for="req-name">Tel</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <input type="text" id="Tel" name="Tel" class="form-control" autocomplete="off" placeholder="Tel" value="">
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <label for="req-name">Email</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <input type="text" id="Email" name="Email" class="form-control" autocomplete="off" placeholder="Email" value="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="display:none" >
-                    <div class="form-group req-box-form">
-                        <div class="col-xs-6">
-                            <label for="req-name">Status</label>
-                            <select class="form-control" id="Active"  name="Active">
-                                <option value="0">Active</option>
-                                <option value="1">UnActive</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6">
-                            <label for="req-name">Role</label>
-                            <select class="form-control" id="Role"  name="Role.ID">
-                                
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group req-box-form">
-                        <div class="col-xs-12">
-                            <label for="req-name">Avatar</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-body" style="margin-top:-50px;">
+                <div class="timeline-body">
                     <div class="row">
-                        <div class="gallery">
+                        <div class="gallery" style="text-align:center;">
                             <figure class="img-wrap veiw-figure">
+                                <span class="close-x" data="1">
+                                    <i class="fa fa-trash"></i>
+                                </span>
                                 <span class="add-x" v data="1">
                                     <i class="fa fa-plus"></i>
                                 </span>
-                                <img src="/image/avatar5.png"  class="imagePath1 img-responsive" alt="" />  
+                                <img src="@Model.Image" class="img-avatar img-responsive" alt="" />
                                 <figcaption>Avatar </figcaption>
                             </figure>
                         </div>
@@ -214,102 +115,310 @@
                         </svg>
                     </div>
                 </div>
+                <div class="row" id="progressPanel" style="text-align:center;display:none;">
+                    <progress id="progressBar" value="10" max="100" style="width:300px; margin: 0 auto;"></progress>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-12">
+                            <label for="req-name">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <input asp-for="Name" class="form-control" autocomplete="off" placeholder="Name" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-12">
+                            <label for="req-name">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <input asp-for="Username" readonly class="form-control" autocomplete="off" placeholder="Username" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-6">
+                            <label for="req-name">Branch/Site</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <select asp-for="BranchId" disabled asp-items="Model.Branch" readonly class="form-control" autocomplete="off"></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <label for="req-name">Department</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <select asp-for="DepartId" disabled asp-items="Model.Depart" readonly class="form-control" autocomplete="off"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-6">
+                            <label for="req-name">Building</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <select asp-for="BuildingId" asp-items="Model.Building" class="form-control" autocomplete="off"></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <label for="req-name">Class</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <select asp-for="ClassId" asp-items="Model.Class" class="form-control" autocomplete="off"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-6">
+                            <label for="req-name">Room</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <select asp-for="RoomId" asp-items="Model.Room" class="form-control" autocomplete="off"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-6">
+                            <label for="req-name">Tel</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <input asp-for="Tel" class="form-control"  autocomplete="off"  placeholder="Tel" />
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <label for="req-name">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <input asp-for="Email" class="form-control" autocomplete="off" placeholder="Email" /> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary pull-right">บันทึก</button>
+
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                    <a href="/User/ChangePass" class="btn btn-default pull-right" style="margin-right:5px;">Change password</a>
                 </div>
             </div>
+        </div>
     </form>
 </section>
-
 @section Scripts {
-<script>
-  //var saveRet = '{{.ret.RetOK}}';
-  //var profile = '{{.important}}';
-  //if (saveRet == 'true') {
-  //  if (profile=='')
-  //   setTimeout(function () { window.location.href = '/user/list' }, 1000);
-  //}
-  //var Active =  '{{.m.Active}}';
-  //if(Active == 'true') {
-  //  $("#Active").val("1");
-  //}else{
-  //  $("#Active").val("0");
-  //}
+    <script>
+        $('.img-wrap .close-x').on('click', function () {
+            $('#deleteImage').val(1);
+            $('.img-avatar').attr('src', '/image/avatar5.png')
+            return false;
+        });
+        $('.img-wrap .add-x').on('click', function () {
+            $("#imageAvatar").click();
+            return false;
+        });
 
-  //$("#Role").val('{{.m.Role.ID}}');
-  //if ($("#Role").val() == '' || $("#Role").val() == null) {
-  //  $("#Role").val($("#Role option:first").val());
-  //}
-  popup = {
-  init: function(){
-    $('.veiw-figure').click(function(){
-      popup.open($(this));
-      $('.img-wrap .close-x').hide();
-      $('.img-wrap .add-x').hide();
-    });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var extension = input.files[0].name.replace(/^.*\./, '');
+                if ($.inArray(extension, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                    $(input).val('');
+                    return;
+                }
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    //$('.img-avatar').attr('src', event.imagePath);
+                    uploadFile();
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
-    $(document).on('click', '.popup img', function(){
-      return false;
-    }).on('click', '.popup', function(){
-      popup.close();
-      $('.img-wrap .close-x').show();
-      $('.img-wrap .add-x').show();
-    })
-  },
-  open: function($figure) {
-    $('.img-wrap .close-x').hide();
-    $('.img-wrap .add-x').hide();
-    $('.gallery').addClass('pop');
-    $popup = $('<div class="popup" />').appendTo($('body'));
-    $fig = $figure.clone().appendTo($('.popup'));
-    $bg = $('<div class="bg" />').appendTo($('.popup'));
-    $close = $('<div class="close"><svg><use xlink:href="#close"></use></svg></div>').appendTo($fig);
-    $shadow = $('<div class="shadow" />').appendTo($fig);
-    src = $('img', $fig).attr('src');
-    $shadow.css({backgroundImage: 'url(' + src + ')'});
-    $bg.css({backgroundImage: 'url(' + src + ')'});
-    setTimeout(function(){
-      $('.popup').addClass('pop');
-    }, 10);
-  },
-  close: function(){
-    $('.img-wrap .close-x').show();
-    $('.img-wrap .add-x').show();
-    $('.gallery, .popup').removeClass('pop');
-    setTimeout(function(){
-      $('.popup').remove()
-    }, 100);
-  }
-}
-popup.init();
-      $('.img-wrap .close-x').on('click', function () {
-       $('#DeleteImage' + $(this).attr('data')).val(1);
-       $('.imagePath' + $(this).attr('data')).attr('src','/static/image/600_x_400.png')
-        return false;
-      });
-      $('.img-wrap .add-x').on('click', function () {
-        console.log( $(this).attr('data'))
-        $("#imagePath" + $(this).attr("data")).click();
-        return false;
-      });
+        $("#imageAvatar").change(function () {
+            readURL(this);
+        });
 
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var extension = input.files[0].name.replace(/^.*\./, '');
-      if ( $.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
-       $(input).val('');
-       return;
-      }
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        $('.' + $(input).attr("id") ).attr('src', e.target.result);
-      }
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
+        $('#BranchId,#DepartId,#BuildingId,#ClassId,#RoomId').select2({
+            multiple: false,
+            width: '100%'
+        });   
 
-  $("#imagePath1").change(function() {
-     readURL(this);
-  });
-</script>
+        $('#BranchId').change(function () { 
+            PopulateBuilding();
+        });
+
+        $('#BuildingId').change(function () {
+            PopulateClass();
+        });
+
+
+        $('#ClassId').change(function () {
+            PopulateRoom();
+        });
+
+        function PopulateBuilding() {
+            var requestData = {
+                Id: $('#BranchId').val()
+            };
+            $.ajax({
+                url: '/Building/GetBuildingJSON',
+                type: 'POST',
+                data: JSON.stringify(requestData),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    if (result.ok) {
+                        $('#BuildingId').empty();
+                        result.listData.forEach(function (el) {
+                            $('#BuildingId').append(
+                                `<option value="{0}" {1} >{2}</option>`.format([el.id, '', el.name])
+                            );
+                        });
+                        PopulateClass();
+                    }
+                },
+                async: true,
+                processData: false
+            });
+        }
+
+        function PopulateClass() {
+            var requestData = {
+                Id: $('#BuildingId').val()
+            };
+            $.ajax({
+                url: '/Class/GetClassJSON',
+                type: 'POST',
+                data: JSON.stringify(requestData),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    if (result.ok) {
+                        $('#ClassId').empty();
+                        result.listData.forEach(function (el) {
+                            $('#ClassId').append(
+                                `<option value="{0}" {1} >{2}</option>`.format([el.id, '', el.name])
+                            );
+                        });
+                        PopulateRoom();
+                    }
+                },
+                async: true,
+                processData: false
+            });
+        }
+
+        function PopulateRoom() {
+            var requestData = {
+                Id: $('#ClassId').val()
+            };
+            $.ajax({
+                url: '/Room/GetRoomJSON',
+                type: 'POST',
+                data: JSON.stringify(requestData),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    if (result.ok) {
+                        $('#RoomId').empty();
+                        result.listData.forEach(function (el) {
+                            $('#RoomId').append(
+                                `<option value="{0}" {1} >{2}</option>`.format([el.id, '', el.name])
+                            );
+                        });
+                    }
+                },
+                async: true,
+                processData: false
+            });
+        }
+
+        function _(el) {
+            return document.getElementById(el);
+        }
+
+        function uploadFile() {
+            $('#progressPanel').show();
+            var file = _("imageAvatar").files[0];
+            var formdata = new FormData();
+            formdata.append("imageAvatar", file);
+            var ajax = new XMLHttpRequest();
+            ajax.upload.addEventListener("progress", progressHandler, false);
+            ajax.addEventListener("load", completeHandler, false);
+            ajax.addEventListener("error", errorHandler, false);
+            ajax.addEventListener("abort", abortHandler, false);
+            ajax.open("POST", "/User/UploadAvatar");  
+            ajax.send(formdata);
+        }
+
+        function progressHandler(event) {
+            var percent = (event.loaded / event.total) * 100;
+            _("progressBar").value = Math.round(percent); 
+        }
+
+        function completeHandler(event) {
+            _("progressBar").value = 0;  
+            $('#progressPanel').hide();
+            if (event.currentTarget.status == 200) {
+                var ret = JSON.parse(event.currentTarget.responseText ); 
+                $('.img-avatar').attr('src', ret.imagePath);
+                $('.user-image').attr('src', ret.imagePath);
+                localStorage.setItem('avatar', ret.imagePath);
+            }
+        }
+
+        function successHandler(event) {
+            
+        }
+
+        function errorHandler(event) {
+            _("progressBar").value = 0;  
+            alert("Upload Failed");
+            $('#progressPanel').hide();
+        }
+
+        function abortHandler(event) {
+            _("progressBar").value = 0;  
+            alert("Upload Aborted");
+            $('#progressPanel').hide();
+        }
+        if ($('#BuildingId').val() == '') {
+            PopulateBuilding();
+         }
+    </script>
 }

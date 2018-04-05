@@ -823,6 +823,7 @@
 
   <ItemGroup>
     <Folder Include="Helpers\" />
+    <Folder Include="wwwroot\image\user\" />
   </ItemGroup>
 
 </Project>
