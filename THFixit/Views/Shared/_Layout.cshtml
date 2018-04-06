@@ -281,7 +281,7 @@
         <script src="~/js/room.js"></script>
     </environment>
     @RenderSection("Scripts", required: false)
-    <script>
+    <script>         
         String.prototype.format = function (args) {
             var str = this;
             return str.replace(String.prototype.format.regex, function (item) {

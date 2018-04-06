@@ -1,0 +1,66 @@
+﻿@model THFixit.Models.LoginView
+
+@{
+    Layout = null;
+}
+@{
+    var ImageAvatar = User.Claims.FirstOrDefault(x => x.Type == "ImageAvatar")?.Value;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Select Branch</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" type="image/png" href="~/image/favicon.png" />
+    <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/ionicon/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/css/icheck/square/blue.css">
+    <link rel="stylesheet" href="~/css/fixman.css">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="/"><b>Fixit</b>TH</a>
+        </div>
+        <div  >
+            <p class="login-box-msg @(!Model.Ret.Ok ? " login-err": " ")">@Model.Ret.Messsage </p>
+            <div class="help-block text-center">
+                @if (User.Identity.IsAuthenticated)
+                {
+                 @User.Identity.Name  
+                }
+           </div>
+            <div class="lockscreen-item">
+                <div class="lockscreen-image">
+                    <img src="@(string.IsNullOrEmpty(ImageAvatar)? "/image/avatar5.png" : ImageAvatar)" alt="User Image">
+                </div>
+                <form class="lockscreen-credentials">
+                    <div class="input-group">
+                        <select id="branchId" asp-items="Model.Branch" class="form-control" autocomplete="off"></select>
+                        <div  class="input-group-btn">
+                            <button type="button" class="btn branch"><i class="fa fa-arrow-right text-muted"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/icheck/icheck.min.js"></script>
+    <script>
+        $(function () {
+            $('.branch').click(function () {
+                localStorage.setItem('branchId', $('#branchId').val());
+                localStorage.setItem('branchName', $('#branchId option:selected').text());              
+                window.location.href = '/';
+            });  
+        });
+    </script>
+</body>
+</html>
+

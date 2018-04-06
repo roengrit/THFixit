@@ -154,5 +154,26 @@ namespace THFixit.Controllers
             }
             return View(user);
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetUserJson(string q)
+        {
+            var list = new List<Select2View>();
+            var userRepo = new UserRepo(this.configuration);
+            list =  userRepo.FindByName(q).Select(x => new Select2View { id = x.Id, text = x.Name }).ToList();
+            return Json(new { items = list });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult GetUserFirstJson([FromBody] ProfileView user)
+        {
+            var list = new List<Select2View>();
+            var userRepo = new UserRepo(this.configuration);
+            var userProfile = userRepo.FindById(user.Id);
+            userProfile.Password = string.Empty;
+            return Json(new { ok = user != null, item = userProfile });
+        }
     }
 }

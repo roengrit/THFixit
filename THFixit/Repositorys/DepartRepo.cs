@@ -43,6 +43,14 @@ namespace THFixit.Repositorys
             return ret;
         }
 
+        public IEnumerable<Department> FindByName(string term)
+        {
+            DbHelper.OpenCon(ref dbConnection);
+            var ret = dbConnection.Query<Department>("select * from departments where lower(name) like lower(@term);", new { term = "%" + term + "%" });
+            dbConnection.Close();
+            return ret;
+        }
+
         public void Dispose()
         {
             dbConnection.Close();

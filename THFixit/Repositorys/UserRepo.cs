@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Npgsql;
+using THFixit.Models.Model;
 using THFixit.Repositorys;
 
 namespace THFixit.Models
@@ -30,6 +31,14 @@ namespace THFixit.Models
             return ret;
         }
 
+        public IEnumerable<Branch> GetUserBranch(int Id)
+        {
+            DbHelper.OpenCon(ref dbConnection);
+            var ret = dbConnection.Query<Branch>("select branch_id as id , (select name from branchs where id = branch_id) as name  from user_branchs where user_id = @user_id",new { user_id = Id });
+            dbConnection.Close();
+            return ret;
+        }
+
         public User FindById(int id)
         {
             DbHelper.OpenCon(ref dbConnection);
@@ -42,6 +51,14 @@ namespace THFixit.Models
         {
             DbHelper.OpenCon(ref dbConnection);
             var ret = dbConnection.QueryFirstOrDefault<User>("select * from users where username = @username;", new { username = username });
+            dbConnection.Close();
+            return ret;
+        }
+
+        public IEnumerable<User> FindByName(string term)
+        {
+            DbHelper.OpenCon(ref dbConnection);
+            var ret = dbConnection.Query<User>("select * from users where lower(name) like lower(@term);", new { term = "%"+term+"%" });
             dbConnection.Close();
             return ret;
         }

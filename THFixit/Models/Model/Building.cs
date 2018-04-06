@@ -10,7 +10,6 @@ namespace THFixit.Models.Model
         public Int32 Id { get; set; }
         public Int32 BranchId { get; set; }
         public bool IsLock { get; set; }
-        public string Code { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
         public Int32 CreatorId { get; set; }
@@ -25,7 +24,6 @@ namespace THFixit.Models.Model
         public Int32 BranchId { get; set; }
         public Int32 BuildingId { get; set; }
         public bool IsLock { get; set; }
-        public string Code { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
         public Int32 CreatorId { get; set; }
@@ -41,7 +39,6 @@ namespace THFixit.Models.Model
         public Int32 BuildingId { get; set; }
         public Int32 ClassId { get; set; }
         public bool IsLock { get; set; }
-        public string Code { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
         public Int32 CreatorId { get; set; }

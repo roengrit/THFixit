@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using THFixit.Models.Model;
+using THFixit.Models.ModelView;
 using THFixit.Repositorys;
 
 namespace THFixit.Controllers
@@ -47,6 +48,16 @@ namespace THFixit.Controllers
                     Message = "Something wrong!!"
                 });
             }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetClassJson(string q,int buildingId)
+        {
+            var list = new List<Select2View>();
+            var classRepo = new ClassRepo(this.configuration);
+            list = classRepo.FindByName(q, buildingId).Select(x => new Select2View { id = x.Id, text = x.Name }).ToList();
+            return Json(new { items = list });
         }
     }
 }

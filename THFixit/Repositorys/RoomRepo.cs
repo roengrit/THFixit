@@ -50,6 +50,15 @@ namespace THFixit.Repositorys
             return ret;
         }
 
+        public IEnumerable<Room> FindByName(string term,int classId)
+        {
+            term = term ?? string.Empty;
+            DbHelper.OpenCon(ref dbConnection);
+            var ret = dbConnection.Query<Room>("select * from rooms where class_id = @class_id and lower(name) like lower(@term);", new { term = "%" + term + "%", class_id = classId });
+            dbConnection.Close();
+            return ret;
+        }
+
         public void Dispose()
         {
             dbConnection.Close();

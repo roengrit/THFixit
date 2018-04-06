@@ -9,9 +9,9 @@ CACHE 1;
 DROP TABLE IF EXISTS "public"."buildings";
 CREATE TABLE "public"."buildings" (
   "id" int4 NOT NULL DEFAULT nextval('building_id_seq'::regclass),
-	"branch_id" int4  ,
+   "branch_id" int4  ,
   "is_lock" bool NOT NULL DEFAULT false,
-	"code" varchar(50) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,
+  "code" varchar(50) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,   	 
   "active" bool NOT NULL DEFAULT false,
   "creator_id" int4,

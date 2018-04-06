@@ -42,6 +42,14 @@ namespace THFixit.Repositorys
             return ret;
         }
 
+        public IEnumerable<Building> FindByName(string term , int branchId)
+        {
+            DbHelper.OpenCon(ref dbConnection);
+            var ret = dbConnection.Query<Building>("select * from buildings where branch_id = @branch_id and lower(name) like lower(@term);", new { term = "%" + term + "%", branch_id = branchId });
+            dbConnection.Close();
+            return ret;
+        }
+
         public void Dispose()
         {
             dbConnection.Close();

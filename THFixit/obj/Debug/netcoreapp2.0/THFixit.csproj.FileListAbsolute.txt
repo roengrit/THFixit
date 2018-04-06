@@ -17,3 +17,6 @@ C:\Users\admin\Documents\github\golang\src\THFixit\THFixit\obj\Debug\netcoreapp2
 C:\Users\admin\Documents\github\golang\src\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.AssemblyInfo.cs
 C:\Users\admin\Documents\github\golang\src\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.dll
 C:\Users\admin\Documents\github\golang\src\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.pdb
+C:\Users\logon\source\repos\THFixit\THFixit\bin\Debug\netcoreapp2.0\THFixit.pdb
+C:\Users\logon\source\repos\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.dll
+C:\Users\logon\source\repos\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.pdb

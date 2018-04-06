@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using THFixit.Models;
+using THFixit.Models.ModelView;
 
 namespace THFixit.Controllers
 {
@@ -24,6 +26,14 @@ namespace THFixit.Controllers
         {
             login.Ret.Ok = true;
             login.Ret.Messsage = "Sign In";
+            return View(login);
+        }
+
+        public IActionResult Branch(LoginView login)
+        {
+            UserRepo userRepo = new UserRepo(this.configuration);
+            var userBranch = userRepo.GetUserBranch(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value)).Select( x => new SelectListItem {  Value = x.Id.ToString(),  Text = x.Name  });
+            login.Branch = userBranch;
             return View(login);
         }
 
@@ -47,14 +57,15 @@ namespace THFixit.Controllers
                         new Claim("RoleId",user.RoleId.ToString()),
                         new Claim("RoleName",user.Role.Name),
                         new Claim("CanAccess",CanAccess),
-                        new Claim("Id",user.Id.ToString())
+                        new Claim("Id",user.Id.ToString()) ,
+                        new Claim("BranchId",user.BranchId.ToString())
                     };
                     ClaimsIdentity identity = new ClaimsIdentity(claims, "cookie");
                     ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(scheme: "Fixman", principal: principal);
 
                     userRepo.Dispose();
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Branch", "Auth");
                 }
                 else
                 {

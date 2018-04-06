@@ -8,6 +8,18 @@ namespace THFixit.Models.ModelView
     public class TicketView
     {
         public Ret Ret { get; set; }
+        public Int32 Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public Int32 RequestorId { get; set; }
+        public Int32 BranchId { get; set; }
+        public Int32 DepartId { get; set; }
+        public Int32 BuildingId { get; set; }
+        public Int32 ClassId { get; set; }
+        public Int32 RoomId { get; set; }
+        public Int32 PriorityId { get; set; }
+        public Int32 StatusId { get; set; }
+        public string Contact { get; set; }
 
         public TicketView()
         {
