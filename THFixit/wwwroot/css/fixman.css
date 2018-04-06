@@ -14,3 +14,12 @@
     color:red;
 }
 
+.form-group-ex {
+    clear: both;
+    margin-bottom: 20px;
+}
+.btn-danger.btn-outline {
+    color: #ed4040;
+    border-color: #ed4040;
+    background-color: transparent;
+}

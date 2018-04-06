@@ -1,8 +1,178 @@
-﻿
-@{
-    ViewData["Title"] = "ChangePass";
+﻿@{
+    ViewData["Title"] = "Change Password";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model THFixit.Models.ModelView.ProfileView
+<style>
+    .form-group {
+        clear: both;
+        margin-bottom: 80px;
+    }
 
-<h2>ChangePass</h2>
+    input.largerCheckbox {
+        width: 20px;
+        height: 20px;
+    }
 
+    .img-wrap {
+        position: relative;
+        display: inline-block;
+        font-size: 0;
+    }
+
+        .img-wrap .close-x {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+            background-color: #ddd;
+            padding: 5px 5px 5px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: .2;
+            text-align: center;
+            font-size: 22px;
+            line-height: 10px;
+            border-radius: 10%;
+        }
+
+        .img-wrap:hover .close-x {
+            opacity: 1;
+        }
+
+        .img-wrap .add-x {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 100;
+            background-color: #ddd;
+            padding: 5px 5px 5px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: .2;
+            text-align: center;
+            font-size: 22px;
+            line-height: 10px;
+            border-radius: 10%;
+        }
+
+        .img-wrap:hover .add-x {
+            opacity: 1;
+        }
+</style>
+<link rel="stylesheet" href="~/css/gallory/gallory.css">
+<style>
+    .gallery figure {
+        flex-basis: unset;
+    }
+
+        .gallery figure img {
+            width: unset;
+            border-radius: 50%;
+            max-height: 215px;
+            max-width: 215px;
+        }
+
+    .veiw-figure {
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+<section class="content-header">
+    @if (Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    {
+        <div id="top-alert">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Messsage
+            </div>
+            <script>
+               $('#top-alert').fadeOut(1000);
+            </script>
+        </div>
+    }
+    else if (!Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    {
+        <div id="top-alert">
+            <div class="alert  alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Messsage
+            </div>
+        </div>
+    }
+    <h1 id="title-content">
+        Change Password
+    </h1>
+</section>
+<section class="content">
+    <form enctype="multipart/form-data" id="create-form" method="post">
+        <input type='file' id="imageAvatar" name="imageAvatar" style="display:none;" />
+        <div id="box-req" class="box box-primary">
+            <div class="box-body">
+                <div class="timeline-body">
+                    <div class="row">
+                        <div class="gallery" style="text-align:center;">
+                            <figure class="img-wrap veiw-figure">
+                                @*<span class="close-x" data="1">
+                                <i class="fa fa-trash"></i>
+                        </span>
+                        <span class="add-x" v data="1">
+                            <i class="fa fa-plus"></i>
+                        </span>*@
+                                <img src="@Model.Image" class="img-avatar img-responsive" alt="" />
+                                <figcaption>Avatar </figcaption>
+                            </figure>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;">
+                            <symbol id="close" viewBox="0 0 18 18">
+                                <path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M9,0.493C4.302,0.493,0.493,4.302,0.493,9S4.302,17.507,9,17.507
+                                            S17.507,13.698,17.507,9S13.698,0.493,9,0.493z M12.491,11.491c0.292,0.296,0.292,0.773,0,1.068c-0.293,0.295-0.767,0.295-1.059,0
+                                            l-2.435-2.457L6.564,12.56c-0.292,0.295-0.766,0.295-1.058,0c-0.292-0.295-0.292-0.772,0-1.068L7.94,9.035L5.435,6.507
+                                            c-0.292-0.295-0.292-0.773,0-1.068c0.293-0.295,0.766-0.295,1.059,0l2.504,2.528l2.505-2.528c0.292-0.295,0.767-0.295,1.059,0
+                                            s0.292,0.773,0,1.068l-2.505,2.528L12.491,11.491z" />
+                            </symbol>
+                        </svg>
+                    </div>
+                </div>
+                <div class="row" id="progressPanel" style="text-align:center;display:none;">
+                    <progress id="progressBar" value="10" max="100" style="width:300px; margin: 0 auto;"></progress>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-12">
+                            <label for="req-name">Current Password</label>
+                            <input asp-for="CurrentPassword" required class="form-control" type="password" autocomplete="off" placeholder="CurrentPassword" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-12">
+                            <label for="req-name">New Password</label>
+                                <input asp-for="NewPassword" required class="form-control" type="password" autocomplete="off" placeholder="NewPassword" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group req-box-form">
+                        <div class="col-xs-12">
+                            <label for="req-name">Re-type Password</label>
+                            <input asp-for="ReTypePassword" required class="form-control" type="password" autocomplete="off" placeholder="Re-type Password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                    <a href="/User/Profile" class="btn btn-default pull-right" style="margin-right:5px;">Back</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+@section Scripts {
+    <script>
+      
+    </script>
+}

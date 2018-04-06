@@ -1,0 +1,227 @@
+﻿@model THFixit.Models.ModelView.TicketView
+@{
+    ViewData["Title"] = "Tickets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    @if (Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    {
+        <div id="top-alert">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Messsage
+            </div>
+            <script>
+                $('#top-alert').fadeOut(1000);
+            </script>
+        </div>
+    }
+    else if (!Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    {
+        <div id="top-alert">
+            <div class="alert  alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Messsage
+            </div>
+        </div>
+    }
+    <h1 id="title-content">
+        Tickets
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"> Home</a></li>
+        <li class="active">Tickets</li>
+    </ol>
+</section>
+<section class="content">
+    <form enctype="multipart/form-data" id="ticket-form" method="post">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="box-header">
+                        <a href="/Ticket" class="btn btn-info btn-sm"> Create Ticket <i class="fa fa-plus"></i></a>
+                        <button class="btn btn-outline btn-danger btn-sm toggle-filter"> <i class="fa fa-sliders"></i> Filter</button>
+                        <div class="box-tools" style="margin:5px;">
+                            <div class="input-group input-group-sm" style="width:80px;">
+                                <select class="form-control">
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>100</option>
+                                    <option>ALL</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-header" id="filter" style="display:none;">
+                        <div class="" style="background: rgb(251, 251, 251); display: block;" id="ticket-filters">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Agent</label>
+                                    <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="03/30/2018 - 04/06/2018">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Agent</label>
+                                    <input required="" class="form-control" autocomplete="off" placeholder="Ticket Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Status</label>
+                                    <input required="" class="form-control" autocomplete="off" placeholder="Ticket Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Priority</label>
+                                    <input required="" class="form-control" autocomplete="off" placeholder="Ticket Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Channel Name</label>
+                                    <input required="" class="form-control" autocomplete="off" placeholder="Ticket Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Type</label>
+                                    <input required="" class="form-control" autocomplete="off" placeholder="Ticket Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Channel Name</label>
+                                    <input required="" class="form-control" autocomplete="off" placeholder="Ticket Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Type</label>
+                                    <input required="" class="form-control" autocomplete="off" placeholder="Ticket Subject">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-xs-12">&nbsp;</label>
+                                    <button type="button" id="apply-filters" class="btn btn-success col-md-6"><i class="fa fa-check"></i> Apply</button>
+                                    <button type="button" id="reset-filters" class="btn btn-inverse col-md-5 col-md-offset-1"><i class="fa fa-refresh"></i> Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-sm-2 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header"><i style="width: 15px; height: 25px;border-radius:50%;" class="btn btn-warning btn-small btn-circle"> </i> [O]    3,200</h5>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header"><i style="width: 15px; height: 25px;border-radius:50%;" class="btn btn-info btn-small btn-circle"></i> [P] 20</h5>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-2">
+                                <div class="description-block">
+                                    <h5 class="description-header"><i style="width: 15px; height: 25px;border-radius:50%;" class="btn btn-success btn-small btn-circle"></i> [R] 3,455 </h5>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3">
+                                <div class="description-block">
+                                    <h5 class="description-header"><i style="width: 15px; height: 25px;border-radius:50%;" class="btn btn-danger btn-small btn-circle"></i> [C] 3,5444</h5>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="description-block">
+                                    <h5 class="description-header"><i style="width: 15px; height: 25px;border-radius:50%;" class="btn bg-purple-active btn-small btn-circle"></i> [X] 3,5444 </h5>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Task</th>
+                                    <th>Progress</th>
+                                    <th style="width: 40px">Label</th>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>Update software</td>
+                                    <td>
+                                        <div class="progress progress-xs">
+                                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-red">55%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2.</td>
+                                    <td>Clean database</td>
+                                    <td>
+                                        <div class="progress progress-xs">
+                                            <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-yellow">70%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3.</td>
+                                    <td>Cron job running</td>
+                                    <td>
+                                        <div class="progress progress-xs progress-striped active">
+                                            <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-light-blue">30%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4.</td>
+                                    <td>Fix and squish bugs</td>
+                                    <td>
+                                        <div class="progress progress-xs progress-striped active">
+                                            <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-green">90%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li><a href="#">«</a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </form>
+</section>
+@section Scripts {
+    <script>
+        $('.toggle-filter').click(function () {
+            console.log('A')
+            $("#filter").fadeToggle("slow", "linear");
+        })
+    </script>
+}
+
+

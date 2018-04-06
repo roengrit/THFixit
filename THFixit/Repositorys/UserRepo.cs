@@ -46,7 +46,6 @@ namespace THFixit.Models
             return ret;
         }
 
-
         public bool UpdateAvatar(User user)
         {
             try
@@ -87,6 +86,28 @@ namespace THFixit.Models
                                                  });
                 dbConnection.Close();
                 return new Ret { Ok = true , Messsage = "Success" };
+            }
+            catch (Exception ex)
+            {
+                return new Ret { Ok = false, Messsage = ex.Message };
+            }
+        }
+
+        public Ret ChangePassword(User user)
+        {
+            try
+            {
+                DbHelper.OpenCon(ref dbConnection);
+                var ret = dbConnection.Execute(@"update users 
+                                                 set password = @password
+                                                 where id = @id;",
+                                                 new
+                                                 {
+                                                     id = user.Id,
+                                                     password = user.Password
+                                                 });
+                dbConnection.Close();
+                return new Ret { Ok = true, Messsage = "Success" };
             }
             catch (Exception ex)
             {

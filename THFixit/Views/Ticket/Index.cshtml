@@ -1,0 +1,253 @@
+﻿@model THFixit.Models.ModelView.TicketView
+@{
+    ViewData["Title"] = "Add New Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content-header">
+    @if (Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    {
+        <div id="top-alert">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Messsage
+            </div>
+            <script>
+                $('#top-alert').fadeOut(1000);
+            </script>
+        </div>
+    }
+    else if (!Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    {
+        <div id="top-alert">
+            <div class="alert  alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Messsage
+            </div>
+        </div>
+    }
+    <h1 id="title-content">
+        Ticket
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"> Home</a></li>
+        <li><a href="/Ticket/List">  Tickets</a></li>
+        <li class="active">Add New</li>
+    </ol>
+</section>
+<section class="content">
+    <form enctype="multipart/form-data" id="ticket-form" method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <div id="box-req" style="padding:10px;" class="panel panel-default">
+                    <div class="box-body">
+                        <div class="row form-group-ex">
+                            <div class="col-md-12">
+                                <label for="req-name">Ticket Subject</label>
+                                <input required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
+                            </div>
+                        </div>
+                        <div class="row form-group-ex">
+                            <div class="col-md-12">
+                                <label for="req-name">Ticket Description</label>
+                                <textarea style="min-height:325px;" required class="form-control" autocomplete="off" placeholder="Ticket Description"> </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="box-req" style="padding:10px;" class="panel panel-default">
+                    <div class="box-body">
+                        <div class="row form-group-ex">
+                            <div class="col-md-12">
+                                <label for="req-name">
+                                    Requester Name
+                                </label>
+                                <input required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
+                            </div>
+                        </div>
+                        <div class="row form-group-ex">
+                            <div class="col-md-6">
+                                <label for="req-name">
+                                    Department
+                                </label>
+                                <input required class="form-control" autocomplete="off" placeholder="Department" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="req-name">
+                                    Building
+                                </label>
+                                <input required class="form-control" autocomplete="off" placeholder="Building" />
+                            </div>
+                        </div>
+                        <div class="row form-group-ex">
+                            <div class="col-md-6">
+                                <label for="req-name">
+                                    Class
+                                </label>
+                                <input required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="req-name">
+                                    Room
+                                </label>
+                                <input required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
+                            </div>
+                        </div>
+                        <div class="row form-group-ex">
+                            <div class="col-md-6">
+                                <label class="control-label">Priority <span class="text-danger">*</span></label>
+                                <input required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Status <span class="text-danger">*</span></label>
+                                <input required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
+                            </div>
+                        </div>
+                        <div class="row form-group-ex">
+                            <div class="col-md-12">
+                                <label class="control-label">Contact <span class="text-danger">*</span></label>
+                                <input required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-right">
+                        <div class="btn-group dropup">
+                            <a href="/Ticket/List" class="btn btn-default ">Cancel</a>
+                            <button class="btn btn-success  " type="button">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div id="box-req" style="padding:10px;" class="panel panel-default">
+                    <div class="box-header">
+                        <div class="box-tools" style="margin:5px;">
+                            <div class="input-group input-group-sm" style="width:80px;">
+                                <a href="javascript:void(0)" class="btn btn-info btn-sm"> Action <i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <ul class="timeline timeline-inverse">
+                            <!-- timeline time label -->
+                            <li class="time-label">
+                                <span class="bg-red">
+                                    10 Feb. 2014
+                                </span>
+                            </li>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <li>
+                                <i class="fa fa-envelope bg-blue"></i>
+
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+
+                                    <div class="timeline-body">
+                                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                                        quora plaxo ideeli hulu weebly balihoo...
+                                    </div>
+                                    <div class="timeline-footer">
+                                        <a class="btn btn-primary btn-xs">Read more</a>
+                                        <a class="btn btn-danger btn-xs">Delete</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <!-- timeline item -->
+                            <li>
+                                <i class="fa fa-user bg-aqua"></i>
+
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+
+                                    <h3 class="timeline-header no-border">
+                                        <a href="#">Sarah Young</a> accepted your friend request
+                                    </h3>
+                                </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <!-- timeline item -->
+                            <li>
+                                <i class="fa fa-comments bg-yellow"></i>
+
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+
+                                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+
+                                    <div class="timeline-body">
+                                        Take me to your leader!
+                                        Switzerland is small and neutral!
+                                        We are more like Germany, ambitious and misunderstood!
+                                    </div>
+                                    <div class="timeline-footer">
+                                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <!-- timeline time label -->
+                            <li class="time-label">
+                                <span class="bg-green">
+                                    3 Jan. 2014
+                                </span>
+                            </li>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <li>
+                                <i class="fa fa-camera bg-purple"></i>
+
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+
+                                    <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+
+                                    <div class="timeline-body">
+                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- END timeline item -->
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="box-req" style="padding:10px;" class="panel panel-default">
+                    <div class="box-header">
+                        <h3>Time Summary</h3>
+                        <h5 style="border-bottom: 1px solid #f4f4f4;margin-left:10px;"> Time Diff [Req - Action]: 200 m</h5>
+                        <h5 style="border-bottom: 1px solid #f4f4f4;margin-left:10px;"> Time Diff [Action - Resolve] : 200 m</h5>
+                        <h5 style="border-bottom: 1px solid #f4f4f4;margin-left:10px;"> Time Diff [Req - Resolve] : 200 m</h5>
+                        <h5 style="border-bottom: 1px solid #f4f4f4;margin-left:10px;"> Time Use  : 200 m</h5>
+                    </div>
+                    <div class="box-header">
+                        <h3>Expense Summary</h3>
+                        <h5 style="border-bottom: 1px solid #f4f4f4;margin-left:10px;"> Time Diff [Req - Action]: 200 m</h5>
+                        <h5 style="border-bottom: 1px solid #f4f4f4;margin-left:10px;"> Time Diff [Action - Resolve] : 200 m</h5>
+                        <h5 style="border-bottom: 1px solid #f4f4f4;margin-left:10px;"> Time Diff [Req - Resolve] : 200 m</h5>
+                        <h5 style="border-bottom: 1px solid #f4f4f4;margin-left:10px;"> Time Use  : 200 m</h5>
+                    </div>
+                    <div class="panel-footer">
+                        <h3> Total Amount : 2,5463</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+

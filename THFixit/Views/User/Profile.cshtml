@@ -20,7 +20,7 @@
         font-size: 0;
     }
 
-        .img-wrap .close-x {
+    .img-wrap .close-x {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -37,11 +37,11 @@
             border-radius: 10%;
         }
 
-        .img-wrap:hover .close-x {
+    .img-wrap:hover .close-x {
             opacity: 1;
         }
 
-        .img-wrap .add-x {
+    .img-wrap .add-x {
             position: absolute;
             bottom: 10px;
             right: 10px;
@@ -58,7 +58,7 @@
             border-radius: 10%;
         }
 
-        .img-wrap:hover .add-x {
+    .img-wrap:hover .add-x {
             opacity: 1;
         }
 </style>
@@ -68,17 +68,17 @@
         flex-basis: unset;
     }
 
-        .gallery figure img {
+    .gallery figure img {
             width: unset;
             border-radius: 50%;
             max-height: 215px;
             max-width: 215px;
-        }
+   }
 
     .veiw-figure {
         display: block;
         margin: 0 auto;
-    }
+   }
 </style>
 <section class="content-header">
     @if (Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
@@ -143,12 +143,7 @@
                     <div class="form-group req-box-form">
                         <div class="col-xs-12">
                             <label for="req-name">Full Name</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <input asp-for="Name" class="form-control" autocomplete="off" placeholder="Name" />
-                            </div>
+                            <input asp-for="Name" class="form-control" autocomplete="off" placeholder="Name" />
                         </div>
                     </div>
                 </div>
@@ -156,12 +151,7 @@
                     <div class="form-group req-box-form">
                         <div class="col-xs-12">
                             <label for="req-name">Username</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
                                 <input asp-for="Username" readonly class="form-control" autocomplete="off" placeholder="Username" />
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -169,21 +159,11 @@
                     <div class="form-group req-box-form">
                         <div class="col-xs-6">
                             <label for="req-name">Branch/Site</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
                                 <select asp-for="BranchId" disabled asp-items="Model.Branch" readonly class="form-control" autocomplete="off"></select>
-                            </div>
                         </div>
                         <div class="col-xs-6">
                             <label for="req-name">Department</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <select asp-for="DepartId" disabled asp-items="Model.Depart" readonly class="form-control" autocomplete="off"></select>
-                            </div>
+                            <select asp-for="DepartId" disabled asp-items="Model.Depart" readonly class="form-control" autocomplete="off"></select>
                         </div>
                     </div>
                 </div>
@@ -191,21 +171,11 @@
                     <div class="form-group req-box-form">
                         <div class="col-xs-6">
                             <label for="req-name">Building</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <select asp-for="BuildingId" asp-items="Model.Building" class="form-control" autocomplete="off"></select>
-                            </div>
+                            <select asp-for="BuildingId" asp-items="Model.Building" class="form-control" autocomplete="off"></select>
                         </div>
                         <div class="col-xs-6">
                             <label for="req-name">Class</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <select asp-for="ClassId" asp-items="Model.Class" class="form-control" autocomplete="off"></select>
-                            </div>
+                            <select asp-for="ClassId" asp-items="Model.Class" class="form-control" autocomplete="off"></select>
                         </div>
                     </div>
                 </div>
@@ -213,12 +183,7 @@
                     <div class="form-group req-box-form">
                         <div class="col-xs-6">
                             <label for="req-name">Room</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
-                                <select asp-for="RoomId" asp-items="Model.Room" class="form-control" autocomplete="off"></select>
-                            </div>
+                            <select asp-for="RoomId" asp-items="Model.Room" class="form-control" autocomplete="off"></select>
                         </div>
                     </div>
                 </div>
@@ -226,26 +191,15 @@
                     <div class="form-group req-box-form">
                         <div class="col-xs-6">
                             <label for="req-name">Tel</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
                                 <input asp-for="Tel" class="form-control"  autocomplete="off"  placeholder="Tel" />
-                            </div>
                         </div>
                         <div class="col-xs-6">
                             <label for="req-name">Email</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-file-text-o"></i>
-                                </span>
                                 <input asp-for="Email" class="form-control" autocomplete="off" placeholder="Email" /> 
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="box-footer">
-
                     <button type="submit" class="btn btn-primary pull-right">Submit</button>
                     <a href="/User/ChangePass" class="btn btn-default pull-right" style="margin-right:5px;">Change password</a>
                 </div>

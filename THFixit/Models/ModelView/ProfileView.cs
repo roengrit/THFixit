@@ -12,6 +12,9 @@ namespace THFixit.Models.ModelView
         public Int32 Id { get; set; }
         public bool IsLock { get; set; }
         public string Username { get; set; }
+        public string CurrentPassword { get; set; }
+        public string NewPassword { get; set; }
+        public string ReTypePassword { get; set; }
         public string Password { get; set; }
         public string TryPassword { get; set; }
         public string Name { get; set; }
@@ -32,6 +35,9 @@ namespace THFixit.Models.ModelView
         public IEnumerable<SelectListItem> Room { get; set; }
         public IEnumerable<SelectListItem> Class { get; set; }
 
-
+        public ProfileView()
+        {
+            this.Ret = new Ret();
+        } 
     }
 }

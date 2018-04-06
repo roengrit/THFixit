@@ -34,6 +34,7 @@ namespace THFixit.Controllers
             classRepo = new ClassRepo(this.configuration);
             roomRepo = new RoomRepo(this.configuration);
         }
+
         [Authorize]
         public IActionResult Profile(ProfileView user)
         {
@@ -52,7 +53,7 @@ namespace THFixit.Controllers
             user.Ret = new Ret { };
             return View(user);
         }
-         
+
         [HttpPost]
         [Authorize]
         public IActionResult Profile(ProfileView user, bool post)
@@ -109,9 +110,49 @@ namespace THFixit.Controllers
             }
         }
 
-        public IActionResult ChangePass()
+        [Authorize]
+        public IActionResult ChangePass(ProfileView user)
         {
-            return View();
+            var userRepo = new UserRepo(this.configuration);
+            var userEdit = userRepo.FindById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            user.Image = userEdit.ImageAvatar;
+            user.Ret = new Ret { };
+            return View(user);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult ChangePass(ProfileView user, bool post)
+        {
+            var userRepo = new UserRepo(this.configuration);
+            var userEdit = userRepo.FindById(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value));
+            user.Image = userEdit.ImageAvatar;
+            if (string.IsNullOrEmpty(user.CurrentPassword) || string.IsNullOrEmpty(user.NewPassword) || string.IsNullOrEmpty(user.ReTypePassword))
+            {
+                user.Ret = new Ret { Messsage = "Please fill all the fields!" };
+            }
+            else
+            {
+                if (BCrypt.Net.BCrypt.Verify(user.CurrentPassword, userEdit.Password))
+                {
+                    if (user.NewPassword == user.ReTypePassword)
+                    {
+                        var salt = BCrypt.Net.BCrypt.GenerateSalt(BCrypt.Net.SaltRevision.Revision2B);
+                        var hash = BCrypt.Net.BCrypt.HashPassword(user.NewPassword, salt);
+                        userEdit.Password = hash;
+                        user.Ret = userRepo.ChangePassword(userEdit);
+                    }
+                    else
+                    {
+                        user.Ret = new Ret { Messsage = "Password does not match!" };
+                    }
+                }
+                else
+                {
+                    user.Ret = new Ret { Messsage = "Current password is wrong!" };
+                }
+            }
+            return View(user);
         }
     }
 }
