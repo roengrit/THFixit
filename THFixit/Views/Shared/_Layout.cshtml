@@ -11,6 +11,7 @@
     <environment include="Development">
         <link rel="shortcut icon" type="image/png" href="~/image/favicon.png" />
         <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/toast/toast.css">
         <link rel="stylesheet" href="~/css/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="~/css/ionicon/css/ionicons.min.css">
         <link rel="stylesheet" href="~/css/daterange/daterangepicker.css">
@@ -40,6 +41,7 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                        <li><a href="#" id="branch-text">Branch : BCM  </a></li>
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="@ImageAvatar" class="user-image" alt="User Image">
@@ -49,11 +51,11 @@
                                 <li class="rigth-menu" style="padding:2px 2px;">
                                     <a style="padding:5px 5px;" href="/User/Profile">
                                         Profile @if (User.Identity.IsAuthenticated)
-                                                 {
-                                                    <span>[</span> @User.Identity.Name <span>]</span>
-                                                 }
+                                        {
+                                            <span>[</span> @User.Identity.Name <span>]</span>
+                                        }
                                     </a>
-                                </li>                                
+                                </li>
                                 <li class="rigth-menu" style="padding:2px 2px;">
                                     <a style="padding:5px 5px;" href="/Auth/SignOut">Sign Out</a>
                                 </li>
@@ -270,6 +272,7 @@
             </div>
         </div>
     </div>
+    <div class="loading-wait" style="display:none;">Loading&#8230;</div>
     <environment include="Development">
         <script src="~/js/select2/select2.min.js"></script>
         <script src="~/js/jquery.slimscroll.min.js"></script>
@@ -277,11 +280,26 @@
         <script src="~/js/moment/moment.js"></script>
         <script src="~/js/daterange/daterangepicker.js"></script>
         <script src="~/js/timepicker/js/bootstrap-timepicker.js"></script>
+        <script src="~/js/toast/toast.js"></script>
         <script src="~/js/adminlte.min.js"></script>
         <script src="~/js/room.js"></script>
     </environment>
-    @RenderSection("Scripts", required: false)
-    <script>         
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
         String.prototype.format = function (args) {
             var str = this;
             return str.replace(String.prototype.format.regex, function (item) {
@@ -308,7 +326,9 @@
         } else {
             $('.user-image').attr('src', localStorage.getItem('avatar'));
         }
+        $('#branch-text').html('Branch : ' + localStorage.getItem('branchName'));
     </script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
 

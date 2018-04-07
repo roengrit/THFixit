@@ -1,56 +1,79 @@
 ﻿@model THFixit.Models.ModelView.TicketView
 @{
-    ViewData["Title"] = "Add New Ticket";
+    ViewData["Title"] = string.IsNullOrEmpty(Model.DocNo)? "Create Ticket" : "Edit Ticket";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (!string.IsNullOrEmpty(Model.DocNo))
+{
+    <script>
+    localStorage.setItem('branchId','@Model.BuildingId')
+    </script>
+}
 <section class="content-header">
-    @if (Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    @if (Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Message))
     {
-    <div id="top-alert">
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            @Model.Ret.Messsage
+        <div id="top-alert">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Message
+            </div>
+            <script>
+                $('#top-alert').fadeOut(1000);
+            </script>
         </div>
-        <script>
-            $('#top-alert').fadeOut(1000);
-        </script>
-    </div>
     }
-    else if (!Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Messsage))
+    else if (!Model.Ret.Ok && !string.IsNullOrEmpty(Model.Ret.Message))
     {
-    <div id="top-alert">
-        <div class="alert  alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            @Model.Ret.Messsage
+        <div id="top-alert">
+            <div class="alert  alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                @Model.Ret.Message
+            </div>
         </div>
-    </div>
     }
-    <h1 id="title-content">
-        Ticket
-    </h1>
+        <h1 id="title-content">
+            <i style="width: 15px; height: 25px;border-radius:50%;margin-top:-5px;" class="btn btn-warning btn-small btn-circle"> </i>   Ticket @(string.IsNullOrEmpty(Model.DocNo) ? "" : "#" + Model.Id)
+        </h1>
     <ol class="breadcrumb">
         <li><a href="/"> Home</a></li>
         <li><a href="/Ticket/List">  Tickets</a></li>
-        <li class="active">Add New</li>
+        <li class="active">Create</li>
     </ol>
 </section>
 <section class="content">
     <form enctype="multipart/form-data" id="ticket-form" method="post">
         <input asp-for="BranchId" type="hidden" />
+        <input asp-for="No" type="hidden" />
+        <input asp-for="DocNo" type="hidden" />
+        <input asp-for="Id" type="hidden" />
         <div class="row">
             <div class="col-md-8">
                 <div id="box-req" style="padding:10px;" class="panel panel-default">
+                    <div class="box-header">
+                        @(string.IsNullOrEmpty(Model.DocNo) ? "" : "#" + Model.DocNo)   
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm" @(string.IsNullOrEmpty(Model.DocNo) ? "style=display:none;" : "")>
+                                <a href="javascript:void(0)" class="btn btn-info btn-sm"> Action <i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="box-body">
                         <div class="row form-group-ex">
                             <div class="col-md-12">
                                 <label for="req-name">Ticket Subject <span class="text-danger">*</span> </label>
-                                <input required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
+                                <input asp-for="Title" required class="form-control" autocomplete="off" placeholder="Ticket Subject" />
                             </div>
                         </div>
                         <div class="row form-group-ex">
                             <div class="col-md-12">
                                 <label for="req-name">Ticket Description <span class="text-danger">*</span></label>
-                                <textarea style="min-height:325px;" required class="form-control" autocomplete="off" placeholder="Ticket Description"></textarea>
+                                <textarea style="min-height:250px;" asp-for="Description" required class="form-control" autocomplete="off" placeholder="Ticket Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group-ex">
+                            <div class="col-md-12">
+                                <label for="req-name">Serial Number/Register No/Machine No <span class="text-danger">* (If know)</span> </label>
+                                <input asp-for="SerialNumber" required class="form-control" autocomplete="off" placeholder="Serial Number ...." />
                             </div>
                         </div>
                     </div>
@@ -58,14 +81,17 @@
             </div>
             <div class="col-md-4">
                 <div id="box-req" style="padding:10px;" class="panel panel-default">
+                    <div class="box-header" id="DocNoView">
+                        @(string.IsNullOrEmpty(Model.DocNo) ? "" : "#" + Model.DocDate)
+                    </div>
                     <div class="box-body">
                         <div class="row form-group-ex">
                             <div class="col-md-12">
                                 <label for="req-name">
-                                    Requestor Name <span class="text-danger">*</span>
+                                    Requestor/Director <span class="text-danger">*</span>
                                 </label>
                                 <select asp-for="RequestorId" class="form-control" required autocomplete="off">
-                                    <option>Requestor</option>
+                                    @Html.Raw((string.IsNullOrEmpty(Model.DocNo) ? "<option value='0'>Requestor</option>" : "<option value='" + Model.RequestorId + "'>" + Model.RequestorName + "</option>"))
                                 </select>
                             </div>
                         </div>
@@ -75,7 +101,7 @@
                                     Department<span class="text-danger">*</span>
                                 </label>
                                 <select asp-for="DepartId" class="form-control" required autocomplete="off">
-                                    <option>Department</option>
+                                    <option value="0">Department</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -83,7 +109,7 @@
                                     Building<span class="text-danger">*</span>
                                 </label>
                                 <select asp-for="BuildingId" class="form-control" required autocomplete="off">
-                                    <option>Building</option>
+                                    <option value="0">Building</option>
                                 </select>
                             </div>
                         </div>
@@ -93,7 +119,7 @@
                                     Class<span class="text-danger">*</span>
                                 </label>
                                 <select asp-for="ClassId" class="form-control" required autocomplete="off">
-                                    <option>Class</option>
+                                    <option value="0">Class</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -101,22 +127,19 @@
                                     Room <span class="text-danger">*</span>
                                 </label>
                                 <select asp-for="RoomId" class="form-control" required autocomplete="off">
-                                    <option>Room</option>
+                                    <option value="0">Room</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row form-group-ex">
                             <div class="col-md-6">
                                 <label class="control-label">Priority <span class="text-danger">*</span></label>
-                                <select asp-for="PriorityId" class="form-control" required autocomplete="off">
-                                    <option>Priority</option>
-                                </select>
+                                <select asp-for="PriorityId" asp-items="Model.Prioritys" class="form-control" 
+                                        required autocomplete="off"></select>
                             </div>
                             <div class="col-md-6">
                                 <label class="control-label">Status <span class="text-danger">*</span></label>
-                                <select asp-for="StatusId" class="form-control" required autocomplete="off">
-                                    <option>Status</option>
-                                </select>
+                                <select asp-for="StatusId" disabled asp-items="Model.Status" class="form-control" required autocomplete="off"></select>
                             </div>
                         </div>
                         <div class="row form-group-ex">
@@ -129,18 +152,19 @@
                     <div class="panel-footer text-right">
                         <div class="btn-group dropup">
                             <a href="/Ticket/List" class="btn btn-default ">Cancel</a>
-                            <button class="btn btn-success  " type="button">Submit</button>
+                            <button class="btn btn-success" onclick="Save()" type="button">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" @(string.IsNullOrEmpty(Model.DocNo) ? "style=display:none;" : "")>
             <div class="col-md-8">
                 <div id="box-req" style="padding:10px;" class="panel panel-default">
                     <div class="box-header">
                         <div class="box-tools" style="margin:5px;">
-                            <div class="input-group input-group-sm" style="width:80px;">
+                            <div class="btn-group dropup"  >
+                                <a href="javascript:void(0)" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh </a>
                                 <a href="javascript:void(0)" class="btn btn-info btn-sm"> Action <i class="fa fa-plus"></i></a>
                             </div>
                         </div>
@@ -286,10 +310,15 @@
         }
     });
 
-    var BuildingId = 0;
-    var ClassId = 0;
-    var RoomId = 0;
-    var DepartId = 0;
+    var DocNo = '@(string.IsNullOrEmpty(Model.DocNo)? "" : Model.DocNo )';
+    var BuildingId = @(string.IsNullOrEmpty(Model.DocNo)? 0 : Model.BuildingId );
+    var ClassId =@(string.IsNullOrEmpty(Model.DocNo)? 0 : Model.ClassId );
+    var RoomId = @(string.IsNullOrEmpty(Model.DocNo)? 0 : Model.RoomId );
+    var DepartId = @(string.IsNullOrEmpty(Model.DocNo)? 0 : Model.DepartId );
+    if (DocNo != '') {
+        $('#PriorityId').prop('disabled', true);
+        $('.loading-wait').show();
+    }
 
     $('#RequestorId').on("select2:selecting", function (e) {
         var requestData = {
@@ -305,6 +334,7 @@
                 alert('Error: ' + xhr.statusText);
             },
             success: function (result) {
+                $('.loading-wait').show();
                 if (result.ok) {
                     BuildingId = result.item.buildingId;
                     ClassId = result.item.classId;
@@ -314,6 +344,7 @@
                     PopulateBuilding();
                     PopulateClass();
                     PopulateRoom();
+                    $('#Contact').val(result.item.contact);
                 }
             },
             async: true,
@@ -359,6 +390,7 @@
         ClassId = 0;
         RoomId = 0;
         DepartId = 0;
+        $('.loading-wait').show();
         PopulateClass();
         PopulateRoom();
     });
@@ -379,12 +411,12 @@
             }
         }
     });
-
     $('#ClassId').change(function (e) {
         BuildingId = 0;
         ClassId = 0;
         RoomId = 0;
         DepartId = 0;
+        $('.loading-wait').show();
         PopulateRoom();
     });
 
@@ -404,12 +436,11 @@
             }
         }
     });
-
     $('#RoomId').change(function (e) {
         BuildingId = 0;
         ClassId = 0;
         RoomId = 0;
-        DepartId = 0; 
+        DepartId = 0;
     });
 
     $('#PriorityId').select2({
@@ -515,6 +546,9 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             error: function (xhr) {
+                $('.loading-wait').fadeOut(500, function () {
+                    $('.loading-wait').hide();
+                });
                 alert('Error: ' + xhr.statusText);
             },
             success: function (result) {
@@ -524,12 +558,17 @@
                             `<option value="{0}" {1} >{2}</option>`.format([el.id, RoomId == el.id ? 'selected' : '', el.name])
                         );
                     });
+                   
                 }
+                $('.loading-wait').fadeOut(500, function () {
+                    $('.loading-wait').hide();
+                });
             },
             async: true,
             processData: false
         });
     }
+
     function PopulateDepart() {
         var requestData = {
             Id: $('#BranchId').val()
@@ -556,6 +595,100 @@
             async: true,
             processData: false
         });
+    }
+
+    function Save()
+    {
+        if ($('#Title').val()=='') {
+            toastr["error"]("Title is required.")
+            return;
+         }
+        if ($('#Description').val() == '') {
+            toastr["error"]("Description is required.")
+            return;
+        }
+        if ($('#RequestorId').val() == '' || $('#RequestorId').val() == '0') {
+            toastr["error"]("Requestor is required.")
+            return;
+        }
+        if ($('#DepartId').val() == '' || $('#DepartId').val() == '0') {
+            toastr["error"]("Department is required.")
+            return;
+        }
+        if ($('#BuildingId').val() == '' || $('#BuildingId').val() == '0') {
+            toastr["error"]("Building is required.")
+            return;
+        }
+        if ($('#ClassId').val() == '' || $('#ClassId').val() == '0') {
+            toastr["error"]("Class is required.")
+            return;
+        }
+        if ($('#RoomId').val() == '' || $('#RoomId').val() == '0') {
+            toastr["error"]("Room is required.")
+            return;
+        }
+        if ($('#PriorityId').val() == '' || $('#PriorityId').val() == '0') {
+            toastr["error"]("Priority is required.")
+            return;
+        }
+        if ($('#StatusId').val() == '' || $('#StatusId').val() == '0') {
+            toastr["error"]("Status is required.")
+            return;
+        }
+        $('.loading-wait').show();
+
+        var requestData = {
+            BranchId: $('#BranchId').val(),
+            BuildingId: $('#BuildingId').val(),
+            ClassId: $('#ClassId').val(),
+            Contact: $('#Contact').val(),
+            DepartId: $('#DepartId').val(),
+            Description: $('#Description').val(),
+            PriorityId: $('#PriorityId').val() ,
+            RequestorId: $('#RequestorId').val() ,
+            RoomId: $('#RoomId').val(),
+            StatusId: $('#StatusId').val(),
+            Title: $('#Title').val(),
+            Id: $('#Id').val()
+        };
+        $.ajax({
+            url: '/Ticket',
+            type: 'POST',
+            data: JSON.stringify(requestData),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            error: function (xhr) {
+                $('.loading-wait').fadeOut(1000, function () {
+                    toastr["error"](response.responseText)
+                    $('.loading-wait').hide();
+                 });
+            },
+            success: function (result) {
+                if (result.ret.ok) {
+                    $('.loading-wait').fadeOut(1000, function () {
+                        toastr["success"]("Success")
+                        $('.loading-wait').hide();
+                        if ($('#DocNo').val() == '') {
+                            window.location.href = '/Ticket/?id=' + result.id;
+                        }
+                    });
+                } else {
+                    $('.loading-wait').fadeOut(1000, function () {
+                        toastr["error"](result.ret.message)
+                        $('.loading-wait').hide();
+                    });
+                }
+            },
+            async: true,
+            processData: false
+        });
+    }
+
+    if (BuildingId != 0) {
+        PopulateDepart();
+        PopulateBuilding();
+        PopulateClass();
+        PopulateRoom();
     }
 </script>
 }

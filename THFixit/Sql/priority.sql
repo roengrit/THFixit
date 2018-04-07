@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS "public"."prioritys";
 CREATE TABLE "public"."prioritys" (
   "id" int4 NOT NULL DEFAULT nextval('priority_id_seq'::regclass), 
   "is_lock" bool NOT NULL DEFAULT false,
-	"name" varchar(500) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,   
+  "name" varchar(500) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,   
   "creator_id" int4,
   "created_at" timestamptz(6) NOT NULL,
   "editor_id" int4,

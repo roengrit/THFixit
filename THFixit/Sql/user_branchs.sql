@@ -16,7 +16,7 @@ CREATE TABLE "public"."user_branchs" (
   "created_at" timestamptz(6) NOT NULL,
   "editor_id" int4,
   "edited_at" timestamptz(6),
-  CONSTRAINT "user_branchs_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "user_branchs_pkey" PRIMARY KEY ("id")
 )
 ;
 

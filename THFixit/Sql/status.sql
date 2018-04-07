@@ -1,15 +1,14 @@
-﻿DROP SEQUENCE IF EXISTS "public"."class_id_seq";
-CREATE SEQUENCE "public"."class_id_seq" 
+﻿DROP SEQUENCE IF EXISTS "public"."status_id_seq";
+CREATE SEQUENCE "public"."status_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
 START 1
 CACHE 1;
 
-DROP TABLE IF EXISTS "public"."class";
-CREATE TABLE "public"."class" (
-  "id" int4 NOT NULL DEFAULT nextval('class_id_seq'::regclass),
-  "building_id" int4  ,
+DROP TABLE IF EXISTS "public"."status";
+CREATE TABLE "public"."statuss" (
+  "id" int4 NOT NULL DEFAULT nextval('status_id_seq'::regclass),
   "is_lock" bool NOT NULL DEFAULT false,
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,   	 
   "active" bool NOT NULL DEFAULT false,
@@ -17,9 +16,8 @@ CREATE TABLE "public"."class" (
   "created_at" timestamptz(6) NOT NULL,
   "editor_id" int4,
   "edited_at" timestamptz(6),
-  CONSTRAINT "class_pkey" PRIMARY KEY ("id") 
+  CONSTRAINT "status_pkey" PRIMARY KEY ("id") 
 )
 ;
 
-ALTER TABLE "public"."class" 
-  OWNER TO "postgres";
+ 

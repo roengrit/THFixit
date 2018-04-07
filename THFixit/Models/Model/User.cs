@@ -18,6 +18,7 @@ namespace THFixit.Models
         public string Tel { get; set; }
         public string Email { get; set; }
         public string Line { get; set; }
+        public string Contact { get; set; }
         public string ImageAvatar { get; set; }
         public Int32 RoleId { get; set; }
         public Int32 BranchId { get; set; }
