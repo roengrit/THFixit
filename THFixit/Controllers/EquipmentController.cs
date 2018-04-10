@@ -8,21 +8,17 @@ using Microsoft.Extensions.Configuration;
 using THFixit.Models.ModelView;
 using THFixit.Repositorys;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace THFixit.Controllers
 {
-    public class PriorityController : Controller
+    public class EquipmentController : Controller
     {
         public string configuration { get; set; }
 
-
-        public PriorityController(IConfiguration configuration)
+        public EquipmentController(IConfiguration configuration)
         {
             this.configuration = configuration.GetConnectionString("DefaultConnection");
         }
 
-        // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
@@ -30,11 +26,11 @@ namespace THFixit.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetPriorityJson(string q)
+        public IActionResult GetEquipmentJson(string query, int branchId)
         {
             var list = new List<Select2View>();
-            var priorityRepo = new PriorityRepo(this.configuration);
-            list = priorityRepo.FindByName(q).Select(x => new Select2View { id = x.Id.ToString(), text = x.Name }).ToList();
+            var eqRepo = new EquipmentRepo(this.configuration);
+            list = eqRepo.FindByName(query, branchId).Select(x => new Select2View { id = x.Code, text = x.Name }).ToList();
             return Json(new { items = list });
         }
     }

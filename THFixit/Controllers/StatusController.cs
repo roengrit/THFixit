@@ -34,7 +34,7 @@ namespace THFixit.Controllers
         {
             var list = new List<Select2View>();
             var statusRepo = new StatusRepo(this.configuration);
-            list = statusRepo.FindByName(q).Select(x => new Select2View { id = x.Id, text = x.Name }).ToList();
+            list = statusRepo.FindByName(q).Select(x => new Select2View { id = x.Id.ToString(), text = x.Name }).ToList();
             return Json(new { items = list });
         }
     }

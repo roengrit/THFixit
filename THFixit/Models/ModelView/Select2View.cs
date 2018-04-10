@@ -7,7 +7,8 @@ namespace THFixit.Models.ModelView
 {
     public class Select2View
     {
-        public int id { get; set; }
+        public string id { get; set; }
+        public string code { get; set; }
         public string text { get; set; }
     }
 }

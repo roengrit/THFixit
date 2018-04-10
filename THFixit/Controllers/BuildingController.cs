@@ -56,7 +56,7 @@ namespace THFixit.Controllers
         {
             var list = new List<Select2View>();
             var buildingRepo = new BuildingRepo(this.configuration);
-            list = buildingRepo.FindByName(q, branchId).Select(x => new Select2View { id = x.Id, text = x.Name }).ToList();
+            list = buildingRepo.FindByName(q, branchId).Select(x => new Select2View { id = x.Id.ToString(), text = x.Name }).ToList();
             return Json(new { items = list });
         }
     }

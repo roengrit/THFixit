@@ -58,7 +58,7 @@ namespace THFixit.Controllers
         {
             var list = new List<Select2View>();
             var departRepo = new DepartRepo(this.configuration);
-            list = departRepo.FindByName(q).Select(x => new Select2View { id = x.Id, text = x.Name }).ToList();
+            list = departRepo.FindByName(q).Select(x => new Select2View { id = x.Id.ToString(), text = x.Name }).ToList();
             return Json(new { items = list });
         }
     }

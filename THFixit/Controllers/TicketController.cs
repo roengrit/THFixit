@@ -16,12 +16,10 @@ namespace THFixit.Controllers
     public class TicketController : Controller
     {
         public string configuration { get; set; }
-        public bool isRenewDocumentNo { get; set; }
 
         public TicketController(IConfiguration configuration)
         {
             this.configuration = configuration.GetConnectionString("DefaultConnection");
-            this.isRenewDocumentNo = Convert.ToBoolean(configuration.GetValue<bool>("IsRenewDocNextMonth"));
         }
         [Authorize]
         public IActionResult Index(TicketView ticket)
