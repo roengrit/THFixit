@@ -27,11 +27,11 @@
             <a href="/"><b>Fixit</b>TH</a>
         </div>
         <div  >
-            <p class="login-box-msg @(!Model.Ret.Ok ? " login-err": " ")">@Model.Ret.Messsage </p>
-            <div class="help-block text-center">
+            <p class="login-box-msg @(!Model.Ret.Ok ? " login-err": " ")">@Model.Ret.Message </p>
+            <div class="help-block text-center" style="margin-left:35px;">
                 @if (User.Identity.IsAuthenticated)
                 {
-                 @User.Identity.Name  
+                  @User.Identity.Name  
                 }
            </div>
             <div class="lockscreen-item">

@@ -24,7 +24,7 @@
             <a href="/"><b>Fixit</b>TH</a>
         </div>
         <div class="login-box-body">
-            <p class="login-box-msg @(!Model.Ret.Ok ? " login-err": " ")">@Model.Ret.Messsage </p> 
+            <p class="login-box-msg @(!Model.Ret.Ok ? " login-err": " ")">@Model.Ret.Message </p> 
             <form asp-action="">
                 <div class="form-group has-feedback @(!Model.Ret.Ok ? " has-error": " has-feedback")">
                     <input asp-for="Username" class="form-control" required placeholder="Username" />

@@ -67,13 +67,14 @@
                         <div class="row form-group-ex">
                             <div class="col-md-12">
                                 <label for="req-name">Ticket Description <span class="text-danger">*</span></label>
-                                <textarea style="min-height:250px;" asp-for="Description" required class="form-control" autocomplete="off" placeholder="Ticket Description"></textarea>
+                                <textarea style="min-height:310px;" asp-for="Description" required class="form-control" autocomplete="off" placeholder="Ticket Description"></textarea>
                             </div>
                         </div>
                         <div class="row form-group-ex">
                             <div class="col-md-12">
-                                <label for="req-name">Serial Number/Register No/Machine No <span class="text-danger">* (If know)</span> </label>
+                                <label for="req-name">Serial Number/Register No/Machine No  </label>
                                 <input asp-for="SerialNumber" required class="form-control" autocomplete="off" placeholder="Serial Number ...." />
+                                <label for="req-name" style="font-size:12px;line-height:12px;">Serial Number/Register No/Machine No   </label>
                             </div>
                         </div>
                     </div>
@@ -88,13 +89,16 @@
                         <div class="row form-group-ex">
                             <div class="col-md-12">
                                 <label for="req-name">
-                                    Requestor/Director <span class="text-danger">*</span>
+                                    Requestor/Director/Receiver <span class="text-danger">*</span>
                                 </label>
                                 <select asp-for="RequestorId" class="form-control" required autocomplete="off">
                                     @Html.Raw((string.IsNullOrEmpty(Model.DocNo) ? "<option value='0'>Requestor</option>" : "<option value='" + Model.RequestorId + "'>" + Model.RequestorName + "</option>"))
                                 </select>
                             </div>
                         </div>
+                        <hr />
+                            Department/Location
+                        <hr />
                         <div class="row form-group-ex">
                             <div class="col-md-6">
                                 <label for="req-name">
@@ -134,7 +138,7 @@
                         <div class="row form-group-ex">
                             <div class="col-md-6">
                                 <label class="control-label">Priority <span class="text-danger">*</span></label>
-                                <select asp-for="PriorityId" asp-items="Model.Prioritys" class="form-control" 
+                                <select asp-for="PriorityId" asp-items="Model.Prioritys" class="form-control"
                                         required autocomplete="off"></select>
                             </div>
                             <div class="col-md-6">
