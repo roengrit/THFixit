@@ -9,6 +9,7 @@ namespace THFixit.Models.Model
     {
         public Int32 Id { get; set; }
         public bool IsLock { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Tel { get; set; }
@@ -16,6 +17,12 @@ namespace THFixit.Models.Model
         public string Image { get; set; }
         public int UserLimit { get; set; }
         public string TokenLine { get; set; }
+        public string TicketPrefix1 { get; set; }
+        public string TicketPrefix2 { get; set; }
+        public string TicketPrefix3 { get; set; }
+        public string TicketPrefix4 { get; set; }
+        public string TicketPrefix5 { get; set; }
+        public string TicketPrefix6 { get; set; }
         public bool Active { get; set; }
         public Int32 CreatorId { get; set; }
         public DateTime CreatedAt { get; set; }

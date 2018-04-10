@@ -12,12 +12,12 @@ using THFixit.Repositorys;
 
 namespace THFixit.Controllers
 {
-    public class PriorityController : Controller
+    public class StatusController : Controller
     {
         public string configuration { get; set; }
 
 
-        public PriorityController(IConfiguration configuration)
+        public StatusController(IConfiguration configuration)
         {
             this.configuration = configuration.GetConnectionString("DefaultConnection");
         }
@@ -30,11 +30,11 @@ namespace THFixit.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetPriorityJson(string q)
+        public IActionResult GetStatusJson(string q)
         {
             var list = new List<Select2View>();
-            var priorityRepo = new PriorityRepo(this.configuration);
-            list = priorityRepo.FindByName(q).Select(x => new Select2View { id = x.Id, text = x.Name }).ToList();
+            var statusRepo = new StatusRepo(this.configuration);
+            list = statusRepo.FindByName(q).Select(x => new Select2View { id = x.Id, text = x.Name }).ToList();
             return Json(new { items = list });
         }
     }

@@ -89,7 +89,8 @@ namespace THFixit.Models
                                                      email = @email, 
                                                      building_id = @building_id, 
                                                      room_id = @room_id, 
-                                                     class_id = @class_id
+                                                     class_id = @class_id,
+                                                     contact = @contact
                                                  where id = @id;",
                                                  new
                                                  {
@@ -100,13 +101,14 @@ namespace THFixit.Models
                                                      building_id = user.BuildingId,
                                                      room_id = user.RoomId,
                                                      class_id = user.ClassId,
+                                                     contact = user.Contact
                                                  });
                 dbConnection.Close();
-                return new Ret { Ok = true , Messsage = "Success" };
+                return new Ret { Ok = true , Message = "Success" };
             }
             catch (Exception ex)
             {
-                return new Ret { Ok = false, Messsage = ex.Message };
+                return new Ret { Ok = false, Message = ex.Message };
             }
         }
 
@@ -124,11 +126,11 @@ namespace THFixit.Models
                                                      password = user.Password
                                                  });
                 dbConnection.Close();
-                return new Ret { Ok = true, Messsage = "Success" };
+                return new Ret { Ok = true, Message = "Success" };
             }
             catch (Exception ex)
             {
-                return new Ret { Ok = false, Messsage = ex.Message };
+                return new Ret { Ok = false, Message = ex.Message };
             }
         }
 

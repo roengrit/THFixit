@@ -25,7 +25,7 @@ namespace THFixit.Controllers
         public IActionResult Index(LoginView login)
         {
             login.Ret.Ok = true;
-            login.Ret.Messsage = "Sign In";
+            login.Ret.Message = "Sign In";
             return View(login);
         }
 
@@ -70,13 +70,13 @@ namespace THFixit.Controllers
                 else
                 {
                     login.Ret.Ok = false;
-                    login.Ret.Messsage = "Username or password is wrong";
+                    login.Ret.Message = "Username or password is wrong";
                 }
             }
             else
             {
                 login.Ret.Ok = false;
-                login.Ret.Messsage = "Username or password is wrong";
+                login.Ret.Message = "Username or password is wrong";
             }
             userRepo.Dispose();
             return View("Index", login);

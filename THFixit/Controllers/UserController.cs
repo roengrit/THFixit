@@ -50,6 +50,7 @@ namespace THFixit.Controllers
             user.Tel = userEdit.Tel;
             user.Email = userEdit.Email;
             user.Image = userEdit.ImageAvatar;
+            user.Contact = userEdit.Contact;
             user.Ret = new Ret { };
             return View(user);
         }
@@ -75,6 +76,7 @@ namespace THFixit.Controllers
             userEdit.RoomId = user.RoomId;
             userEdit.Tel = user.Tel;
             userEdit.Email = user.Email;
+            userEdit.Contact = user.Contact;
             user.Ret = userRepo.UpdateProfile(userEdit);
             return View(user);
         }
@@ -129,7 +131,7 @@ namespace THFixit.Controllers
             user.Image = userEdit.ImageAvatar;
             if (string.IsNullOrEmpty(user.CurrentPassword) || string.IsNullOrEmpty(user.NewPassword) || string.IsNullOrEmpty(user.ReTypePassword))
             {
-                user.Ret = new Ret { Messsage = "Please fill all the fields!" };
+                user.Ret = new Ret { Message = "Please fill all the fields!" };
             }
             else
             {
@@ -144,12 +146,12 @@ namespace THFixit.Controllers
                     }
                     else
                     {
-                        user.Ret = new Ret { Messsage = "Password does not match!" };
+                        user.Ret = new Ret { Message = "Password does not match!" };
                     }
                 }
                 else
                 {
-                    user.Ret = new Ret { Messsage = "Current password is wrong!" };
+                    user.Ret = new Ret { Message = "Current password is wrong!" };
                 }
             }
             return View(user);

@@ -10,15 +10,13 @@ DROP TABLE IF EXISTS "public"."departments";
 CREATE TABLE "public"."departments" (
   "id" int4 NOT NULL DEFAULT nextval('department_id_seq'::regclass),
   "is_lock" bool NOT NULL DEFAULT false,
-	"code" varchar(50) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,   	 
   "active" bool NOT NULL DEFAULT false,
   "creator_id" int4,
   "created_at" timestamptz(6) NOT NULL,
   "editor_id" int4,
   "edited_at" timestamptz(6),
-  CONSTRAINT "departments_pkey" PRIMARY KEY ("id"),
-  CONSTRAINT "departments_unique_code" UNIQUE ("code")
+  CONSTRAINT "departments_pkey" PRIMARY KEY ("id") 
 )
 ;
 

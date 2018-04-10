@@ -8,6 +8,8 @@ namespace THFixit.Models
     public class Ret
     {
         public bool Ok { get; set; }
-        public string Messsage { get; set; }
+        public int Id { get; set; }
+        public string DocNo { get; set; }
+        public string Message { get; set; }
     }
 }
