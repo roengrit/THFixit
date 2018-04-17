@@ -149,3 +149,8 @@
         transform: rotate(360deg);
     }
 }
+.found-text {
+    border-color: forestgreen !important;
+    background: url(/image/check-small.png) no-repeat scroll 7px 7px;
+    padding-left: 30px;
+}

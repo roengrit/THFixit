@@ -57,7 +57,7 @@
             $('.branch').click(function () {
                 localStorage.setItem('branchId', $('#branchId').val());
                 localStorage.setItem('branchName', $('#branchId option:selected').text());              
-                window.location.href = '/';
+                window.location.href = '/Auth/ChangeBranch/?id=' + $('#branchId').val();
             });  
         });
     </script>

@@ -8,7 +8,7 @@ using Dapper;
 using THFixit.Models.Model;
 namespace THFixit.Repositorys
 {
-    public class PriorityRepo : IDisposable
+    public class PriorityRepo 
     {
         private IDbConnection dbConnection;
 
@@ -48,11 +48,6 @@ namespace THFixit.Repositorys
             var ret = dbConnection.Query<Priority>("select * from prioritys where lower(name) like lower(@term);", new { term = "%" + term + "%"  });
             dbConnection.Close();
             return ret;
-        }
-
-        public void Dispose()
-        {
-            dbConnection.Close();
-        }
+        } 
     }
 }

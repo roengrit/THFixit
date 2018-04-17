@@ -10,7 +10,7 @@ using THFixit.Repositorys;
 
 namespace THFixit.Models
 {
-    public class UserRepo : IDisposable
+    public class UserRepo  
     {
         private IDbConnection dbConnection;
 
@@ -132,11 +132,6 @@ namespace THFixit.Models
             {
                 return new Ret { Ok = false, Message = ex.Message };
             }
-        }
-
-        public void Dispose()
-        {
-            dbConnection.Close();
-        }
+        } 
     }
 }

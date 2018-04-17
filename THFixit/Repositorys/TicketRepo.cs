@@ -42,12 +42,11 @@ namespace THFixit.Repositorys
             try
             {
                 var ret = dbConnection.Execute(
-                    @"insert into tickets(no,doc_no,title,description,branch_id,depart_id,building_id,room_id,class_id,priority_id,status_id,contact,requestor_id,creator_id,created_at)
-                                   values(@no,@doc_no,@title,@description,@branch_id,@depart_id,@building_id,@room_id,@class_id,@priority_id,@status_id,@contact,@requestor_id,@creator_id,current_timestamp);
+                    @"insert into tickets(doc_no,title,description,serial_number,branch_id,depart_id,building_id,room_id,class_id,priority_id,status_id,contact,requestor_id,creator_id,created_at)
+                                  values(@doc_no,@title,@description,@serial_number,@branch_id,@depart_id,@building_id,@room_id,@class_id,@priority_id,@status_id,@contact,@requestor_id,@creator_id,current_timestamp);
                     ",
                                                  new
                                                  {
-                                                     no = Ticket.No,
                                                      no_ref = Ticket.NoRef,
                                                      doc_no = Ticket.DocNo ,
                                                      title = Ticket.Title,
@@ -61,10 +60,52 @@ namespace THFixit.Repositorys
                                                      status_id = Ticket.StatusId,
                                                      contact = Ticket.Contact,
                                                      requestor_id = Ticket.RequestorId,
-                                                     creator_id = Ticket.CreatorId
+                                                     creator_id = Ticket.CreatorId,
+                                                     serial_number = Ticket.SerialNumber
                                                  });
                 dbConnection.Close();
                 return new Ret { Ok = true, Message = "Success" , Id = ret};
+            }
+            catch (Exception ex)
+            {
+                dbConnection.Close();
+                return new Ret { Ok = false, Message = ex.Message };
+            }
+        }
+
+        public Ret Update(Ticket Ticket)
+        {
+            DbHelper.OpenCon(ref dbConnection);
+            try
+            {
+                var ret = dbConnection.Execute(
+                    @"update tickets set title = @title,
+                                         description = @description,
+                                         serial_number = @serial_number,
+                                         depart_id = @depart_id ,
+                                         building_id = @building_id ,
+                                         room_id = @building_id ,
+                                         class_id =  @class_id, 
+                                         contact =  @contact, 
+                                         requestor_id = @requestor_id,
+                                         editor_id = @editor_id,
+                                         edited_at = current_timestamp
+                      where id = @id; ",
+                                                 new
+                                                 {
+                                                     title = Ticket.Title,
+                                                     depart_id = Ticket.DepartId,
+                                                     description = Ticket.Description,
+                                                     building_id = Ticket.BuildingId,
+                                                     room_id = Ticket.RoomId,
+                                                     class_id = Ticket.ClassId,
+                                                     contact = Ticket.Contact,
+                                                     requestor_id = Ticket.RequestorId,
+                                                     editor_id = Ticket.EditorId,
+                                                     serial_number = Ticket.SerialNumber
+                                                 });
+                dbConnection.Close();
+                return new Ret { Ok = true, Message = "Success", Id = ret };
             }
             catch (Exception ex)
             {

@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = string.IsNullOrEmpty(Model.DocNo) ? "Create Ticket" : "Edit Ticket";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var branchId = Context.Request.Cookies["BranchId"].ToString();
 }
 @if (!string.IsNullOrEmpty(Model.DocNo))
 {
@@ -42,7 +43,7 @@
 </section>
 <section class="content">
     <form enctype="multipart/form-data" id="ticket-form" method="post">
-        <input asp-for="BranchId" type="hidden" />
+        <input asp-for="BranchId" type="hidden" value="@branchId" />
         <input asp-for="No" type="hidden" />
         <input asp-for="DocNo" type="hidden" />
         <input asp-for="Id" type="hidden" />
@@ -72,10 +73,8 @@
                         </div>
                         <div class="row form-group-ex">
                             <div class="col-md-12">
-                                <label for="req-name">Serial Number/Register No/Machine No  </label>
-                                <select asp-for="SerialNumber" class="form-control" required autocomplete="off">
-                                    @Html.Raw((string.IsNullOrEmpty(Model.DocNo) ? "<option value=''>------</option>" : "<option value='" + Model.SerialNumber + "'>" + Model.EquipmentName + "</option>"))
-                                </select>
+                                <label for="req-name">Serial Number/Register No/Machine No</label>
+                                <input asp-for="SerialNumber" required class="form-control" autocomplete="off" placeholder="Serial Number/Register No/Machine No" />
                             </div>
                         </div>
                     </div>
@@ -178,7 +177,7 @@
                         <ul class="timeline timeline-inverse">
                             <!-- timeline time label -->
                             <li class="time-label">
-                                <span class="bg-red">
+                                <span class="bg-yellow">
                                     10 Feb. 2014
                                 </span>
                             </li>
@@ -296,25 +295,32 @@
 </section>
 
 @section Scripts{
-    <script src="/js/bootstrap-typeahead.js" charset="UTF-8"></script>
     <script>
-        $('#BranchId').val(localStorage.getItem('branchId'));
 
-        $('#SerialNumber').select2({
-            ajax: {
-                url: '/Equipment/GetEquipmentJson',
-                width: 'resolve',
-                data: function (params) {
-                    return {
-                        query: params.term, branchId: $('#BranchId').val()
-                    };
+        $('#SerialNumber').keyup(function () {
+            var requestData = {
+                BranchId: $('#BranchId').val(),
+                SerialNumber : $(this).val()
+            };
+            $.ajax({
+                url: '/Equipment/GetEquipmentBySnJson',
+                type: 'POST',
+                data: JSON.stringify(requestData),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
                 },
-                processResults: function (data) {
-                    return {
-                        results: data.items
-                    };
-                }
-            }
+                success: function (result) {
+                    if (result.ok) {
+                        $('#SerialNumber').addClass("found-text");
+                    } else {
+                        $('#SerialNumber').removeClass("found-text");
+                    }
+                },
+                async: true,
+                processData: false
+            }); 
         });
 
         $('#RequestorId').select2({
@@ -631,31 +637,31 @@
             toastr["error"]("Description is required.")
             return;
         }
-        if ($('#RequestorId').val() == '' || $('#RequestorId').val() == '0') {
+        if ($('#RequestorId').val() == '' || $('#RequestorId').val() == '0' || $('#RequestorId').val() == null) {
             toastr["error"]("Requestor is required.")
             return;
         }
-        if ($('#DepartId').val() == '' || $('#DepartId').val() == '0') {
+        if ($('#DepartId').val() == '' || $('#DepartId').val() == '0' || $('#DepartId').val() == null) {
             toastr["error"]("Department is required.")
             return;
         }
-        if ($('#BuildingId').val() == '' || $('#BuildingId').val() == '0') {
+        if ($('#BuildingId').val() == '' || $('#BuildingId').val() == '0' || $('#BuildingId').val() == null) {
             toastr["error"]("Building is required.")
             return;
         }
-        if ($('#ClassId').val() == '' || $('#ClassId').val() == '0') {
+        if ($('#ClassId').val() == '' || $('#ClassId').val() == '0' || $('#ClassId').val() == null) {
             toastr["error"]("Class is required.")
             return;
         }
-        if ($('#RoomId').val() == '' || $('#RoomId').val() == '0') {
+        if ($('#RoomId').val() == '' || $('#RoomId').val() == '0' || $('#RoomId').val() == null) {
             toastr["error"]("Room is required.")
             return;
         }
-        if ($('#PriorityId').val() == '' || $('#PriorityId').val() == '0') {
+        if ($('#PriorityId').val() == '' || $('#PriorityId').val() == '0' || $('#PriorityId').val() == null) {
             toastr["error"]("Priority is required.")
             return;
         }
-        if ($('#StatusId').val() == '' || $('#StatusId').val() == '0') {
+        if ($('#StatusId').val() == '' || $('#StatusId').val() == '0' || $('#StatusId').val() == null) {
             toastr["error"]("Status is required.")
             return;
         }
@@ -673,7 +679,8 @@
             RoomId: $('#RoomId').val(),
             StatusId: $('#StatusId').val(),
             Title: $('#Title').val(),
-            Id: $('#Id').val()
+            Id: $('#Id').val(),
+            SerialNumber: $('#SerialNumber').val()
         };
         $.ajax({
             url: '/Ticket',
@@ -693,8 +700,8 @@
                         toastr["success"]("Success")
                         $('.loading-wait').hide();
                         if ($('#DocNo').val() == '') {
-                            window.location.href = '/Ticket/?id=' + result.id;
-                        }
+                            setTimeout(function () { window.location.href = '/Ticket/?id=' + result.id; }, 1500);
+                        } 
                     });
                 } else {
                     $('.loading-wait').fadeOut(1000, function () {

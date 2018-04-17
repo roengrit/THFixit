@@ -8,7 +8,7 @@ using Dapper;
 using THFixit.Models.Model;
 namespace THFixit.Repositorys
 {
-    public class ClassRepo : IDisposable
+    public class ClassRepo  
     {
         private IDbConnection dbConnection;
 
@@ -56,11 +56,6 @@ namespace THFixit.Repositorys
             var ret = dbConnection.Query<Class>("select * from class where building_id = @building_id and lower(name) like lower(@term);", new { term = "%" + term + "%" , building_id = buildingId });
             dbConnection.Close();
             return ret;
-        }
-
-        public void Dispose()
-        {
-            dbConnection.Close();
-        }
+        } 
     }
 }

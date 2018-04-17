@@ -1,5 +1,7 @@
 ﻿@{
     var ImageAvatar = User.Claims.FirstOrDefault(x => x.Type == "ImageAvatar")?.Value;
+    var branchId = Context.Request.Cookies["BranchId"].ToString();
+    var branchName = Context.Request.Cookies["BranchName"].ToString();
 }
 <!DOCTYPE html>
 <html>
@@ -41,7 +43,7 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li><a href="#" id="branch-text">Branch : BCM  </a></li>
+                        <li><a href="#" id="branch-text">Branch : @branchName  </a></li>
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="@ImageAvatar" class="user-image" alt="User Image">
@@ -326,7 +328,6 @@
         } else {
             $('.user-image').attr('src', localStorage.getItem('avatar'));
         }
-        $('#branch-text').html('Branch : ' + localStorage.getItem('branchName'));
     </script>
     @RenderSection("Scripts", required: false)
 </body>

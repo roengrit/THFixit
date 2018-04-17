@@ -21,6 +21,7 @@ namespace THFixit.Controllers
         {
             this.configuration = configuration.GetConnectionString("DefaultConnection");
         }
+
         [Authorize]
         public IActionResult Index(TicketView ticket)
         {
@@ -43,6 +44,7 @@ namespace THFixit.Controllers
                 ticket.Description = document.Description;
                 ticket.Contact = document.Contact;
                 ticket.DocDate = document.CreatedAt.ToString("dd/MM/yyyy HH:mm");
+                ticket.SerialNumber = document.SerialNumber;
                 var departRepo = new DepartRepo(this.configuration);
                 var buildingRepo = new BuildingRepo(this.configuration);
                 var classRepo = new ClassRepo(this.configuration);
@@ -61,31 +63,42 @@ namespace THFixit.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Index([FromBody]TicketView ticket,bool isPost)
+        public IActionResult Index([FromBody]TicketView ticket, bool isPost)
         {
+            ticket.Ret = new Models.Ret { Ok = true };
             var tiketRepo = new TicketRepo(this.configuration);
             var branch = new BranchRepo(this.configuration).FindById(ticket.BranchId);
+            if (!string.IsNullOrEmpty(ticket.SerialNumber))
+            {
+                var eq = new EquipmentRepo(this.configuration).FindBySerial(ticket.SerialNumber, ticket.BranchId);
+                if (eq == null)
+                {
+                    ticket.Ret.Message = "Serial not found!";
+                    ticket.Ret.Ok = false;
+                }
+            }
             if (ticket.Id == 0)
             {
                 var no = new DocumentHelper(this.configuration).GenTicketNo(ticket.BranchId, branch.TicketPrefix1);
-                var docNo = branch.Code + '-' + branch.TicketPrefix1 + '-' + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString("0000") + "-" + no.ToString("00000");
-                ticket.Ret = tiketRepo.Create(new Ticket
-                {
-                    No = no,
-                    DocNo = docNo,
-                    BranchId = ticket.BranchId,
-                    BuildingId = ticket.BuildingId,
-                    ClassId = ticket.ClassId,
-                    Contact = ticket.Contact,
-                    CreatorId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value),
-                    DepartId = ticket.DepartId,
-                    Description = ticket.Description,
-                    PriorityId = ticket.PriorityId,
-                    RequestorId = ticket.RequestorId,
-                    RoomId = ticket.RoomId,
-                    StatusId = ticket.StatusId,
-                    Title = ticket.Title
-                });
+                var docNo = branch.TicketPrefix1 + '-' + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString("0000") + "-" + no.ToString("00000");
+                if (ticket.Ret.Ok)
+                    ticket.Ret = tiketRepo.Create(new Ticket
+                    {
+                        DocNo = docNo,
+                        BranchId = ticket.BranchId,
+                        BuildingId = ticket.BuildingId,
+                        ClassId = ticket.ClassId,
+                        Contact = ticket.Contact,
+                        CreatorId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value),
+                        DepartId = ticket.DepartId,
+                        Description = ticket.Description,
+                        PriorityId = ticket.PriorityId,
+                        RequestorId = ticket.RequestorId,
+                        RoomId = ticket.RoomId,
+                        StatusId = ticket.StatusId,
+                        Title = ticket.Title,
+                        SerialNumber = ticket.SerialNumber
+                    });
                 if (ticket.Ret.Ok)
                 {
                     var document = tiketRepo.FindByDocNo(docNo);
@@ -93,8 +106,22 @@ namespace THFixit.Controllers
                     ticket.Id = document.Id;
                 }
             }
-            else {
-
+            else
+            {
+                if (ticket.Ret.Ok)
+                    ticket.Ret = tiketRepo.Update(new Ticket
+                    {
+                        BuildingId = ticket.BuildingId,
+                        ClassId = ticket.ClassId,
+                        Contact = ticket.Contact,
+                        EditorId = Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value),
+                        DepartId = ticket.DepartId,
+                        Description = ticket.Description,
+                        RequestorId = ticket.RequestorId,
+                        RoomId = ticket.RoomId,
+                        Title = ticket.Title,
+                        SerialNumber = ticket.SerialNumber
+                    });
             }
             return Json(ticket);
         }

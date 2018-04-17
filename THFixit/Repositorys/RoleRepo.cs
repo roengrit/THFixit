@@ -9,7 +9,7 @@ using THFixit.Models;
 
 namespace THFixit.Repositorys
 {
-    public class RoleRepo : IDisposable
+    public class RoleRepo  
     {
         private IDbConnection dbConnection;
 
@@ -41,11 +41,6 @@ namespace THFixit.Repositorys
             var ret = dbConnection.Query<RoleAccess>("select * from role_access where role_id = @id;", new { id = id });
             dbConnection.Close();
             return ret;
-        }
-
-        public void Dispose()
-        {
-            dbConnection.Close();
-        }
+        } 
     }
 }

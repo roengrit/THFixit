@@ -5,11 +5,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using THFixit.Models;
 using THFixit.Models.ModelView;
+using THFixit.Repositorys;
 
 namespace THFixit.Controllers
 {
@@ -35,6 +37,16 @@ namespace THFixit.Controllers
             var userBranch = userRepo.GetUserBranch(Convert.ToInt32(User.Claims.First(x => x.Type == "Id").Value)).Select( x => new SelectListItem {  Value = x.Id.ToString(),  Text = x.Name  });
             login.Branch = userBranch;
             return View(login);
+        }
+
+        public IActionResult ChangeBranch(int id)
+        {
+            var branch = new BranchRepo(configuration).FindById(id);
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddHours(8);
+            Response.Cookies.Append("BranchId", id.ToString(), option);
+            Response.Cookies.Append("BranchName", branch.Name, option);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -63,8 +75,6 @@ namespace THFixit.Controllers
                     ClaimsIdentity identity = new ClaimsIdentity(claims, "cookie");
                     ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(scheme: "Fixman", principal: principal);
-
-                    userRepo.Dispose();
                     return RedirectToAction("Branch", "Auth");
                 }
                 else
@@ -78,7 +88,6 @@ namespace THFixit.Controllers
                 login.Ret.Ok = false;
                 login.Ret.Message = "Username or password is wrong";
             }
-            userRepo.Dispose();
             return View("Index", login);
         }
 

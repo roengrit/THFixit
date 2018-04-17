@@ -20,3 +20,14 @@ C:\Users\admin\Documents\github\golang\src\THFixit\THFixit\obj\Debug\netcoreapp2
 C:\Users\logon\source\repos\THFixit\THFixit\bin\Debug\netcoreapp2.0\THFixit.pdb
 C:\Users\logon\source\repos\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.dll
 C:\Users\logon\source\repos\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.pdb
+C:\Users\admin\Documents\github\THFixit\THFixit\bin\Debug\netcoreapp2.0\THFixit.deps.json
+C:\Users\admin\Documents\github\THFixit\THFixit\bin\Debug\netcoreapp2.0\THFixit.runtimeconfig.json
+C:\Users\admin\Documents\github\THFixit\THFixit\bin\Debug\netcoreapp2.0\THFixit.runtimeconfig.dev.json
+C:\Users\admin\Documents\github\THFixit\THFixit\bin\Debug\netcoreapp2.0\THFixit.dll
+C:\Users\admin\Documents\github\THFixit\THFixit\bin\Debug\netcoreapp2.0\THFixit.pdb
+C:\Users\admin\Documents\github\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.csprojResolveAssemblyReference.cache
+C:\Users\admin\Documents\github\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.csproj.CoreCompileInputs.cache
+C:\Users\admin\Documents\github\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.AssemblyInfoInputs.cache
+C:\Users\admin\Documents\github\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.AssemblyInfo.cs
+C:\Users\admin\Documents\github\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.dll
+C:\Users\admin\Documents\github\THFixit\THFixit\obj\Debug\netcoreapp2.0\THFixit.pdb

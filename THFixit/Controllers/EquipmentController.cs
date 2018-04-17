@@ -26,12 +26,21 @@ namespace THFixit.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetEquipmentJson(string query, int branchId)
+        public IActionResult GetEquipmentJson(string query)
         {
             var list = new List<Select2View>();
             var eqRepo = new EquipmentRepo(this.configuration);
-            list = eqRepo.FindByName(query, branchId).Select(x => new Select2View { id = x.Code, text = x.Name }).ToList();
+            list = eqRepo.FindByName(query).Select(x => new Select2View { id = x.Code, text = x.Name }).ToList();
             return Json(new { items = list });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult GetEquipmentBySnJson([FromBody]EquipmentView eq )
+        {
+            var eqRepo = new EquipmentRepo(this.configuration);
+            var ret = eqRepo.FindBySerial(eq.SerialNumber, eq.BranchId);
+            return Json(new { ok = (ret != null), item = ret });
         }
     }
 }

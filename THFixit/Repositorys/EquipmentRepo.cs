@@ -9,7 +9,7 @@ using THFixit.Models.Model;
 
 namespace THFixit.Repositorys
 {
-    public class EquipmentRepo : IDisposable
+    public class EquipmentRepo  
     {
         private IDbConnection dbConnection;
 
@@ -19,18 +19,18 @@ namespace THFixit.Repositorys
             dbConnection = new NpgsqlConnection(connectionString);
         }
 
-        public IEnumerable<Equipment> GetAll(int branchId)
+        public IEnumerable<Equipment> GetAll()
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.Query<Equipment>("select * from equipments where branch_id = @branch_id ", new { branch_id = branchId });
+            var ret = dbConnection.Query<Equipment>("select * from equipments");
             dbConnection.Close();
             return ret;
         }
 
-        public IEnumerable<Equipment> GetAllActive(int branchId)
+        public IEnumerable<Equipment> GetAllActive()
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.Query<Equipment>("select * from equipments where active = true and branch_id = @branch_id", new { branch_id = branchId });
+            var ret = dbConnection.Query<Equipment>("select * from equipments where active = true ");
             dbConnection.Close();
             return ret;
         }
@@ -43,18 +43,24 @@ namespace THFixit.Repositorys
             return ret;
         }
 
-        public IEnumerable<Equipment> FindByName(string term, int branchId)
+        public IEnumerable<Equipment> FindByName(string term)
         {
             term = term ?? string.Empty;
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.Query<Equipment>("select * from equipments where branch_id = @branch_id and lower(name) like lower(@term);", new { term = "%" + term + "%", branch_id = branchId });
+            var ret = dbConnection.Query<Equipment>("select * from equipments where lower(name) like lower(@term);", new { term = "%" + term + "%" });
             dbConnection.Close();
             return ret;
         }
 
-        public void Dispose()
+        public Equipment FindBySerial(string term, int branchId)
         {
+            term = term ?? string.Empty;
+            DbHelper.OpenCon(ref dbConnection);
+            var ret = dbConnection.QueryFirstOrDefault<Equipment>(
+                @"select equipments.* from equipment_serials join equipments on equipment_serials.eq_id = equipments.id 
+                  where equipment_serials.branch_id = @branch_id and lower(equipment_serials.serial_number) = lower(@term); ", new { term = term, branch_id = branchId });
             dbConnection.Close();
+            return ret;
         }
     }
 }
