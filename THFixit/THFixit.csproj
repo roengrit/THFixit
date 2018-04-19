@@ -822,7 +822,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Sql\" />
     <Folder Include="wwwroot\image\user\" />
   </ItemGroup>
 
