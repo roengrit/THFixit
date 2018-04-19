@@ -73,8 +73,9 @@
                         </div>
                         <div class="row form-group-ex">
                             <div class="col-md-12">
-                                <label for="req-name">Serial Number/Register No/Machine No</label>
-                                <input asp-for="SerialNumber" required class="form-control" autocomplete="off" placeholder="Serial Number/Register No/Machine No" />
+                                <label for="req-name">Register No/Machine No</label>
+                                <input asp-for="SerialNumber" required class="form-control" autocomplete="off" placeholder="Register No/Machine No" />
+                                <label for="req-name" id="MachineName" style="color:green;">@Model.EquipmentName</label>
                             </div>
                         </div>
                     </div>
@@ -314,6 +315,7 @@
                 success: function (result) {
                     if (result.ok) {
                         $('#SerialNumber').addClass("found-text");
+                        $('#MachineName').html(result.item.name)
                     } else {
                         $('#SerialNumber').removeClass("found-text");
                     }

@@ -31,7 +31,11 @@ namespace THFixit.Repositorys
         public Ticket FindById(int Id)
         {
             DbHelper.OpenCon(ref dbConnection);
-            var ret = dbConnection.QueryFirstOrDefault<Ticket>("select *,(select name from users where id = requestor_id) as requestor_name from tickets where id = @id;", new { id = Id });
+            var ret = dbConnection.QueryFirstOrDefault<Ticket>(
+                @"select *,
+                         (select name from users where id = requestor_id) as requestor_name,
+                         (select equipments.name from equipment_serials join equipments on equipment_serials.eq_id = equipments.id where equipment_serials.serial_number = tickets.serial_number  ) as equipment_name
+                  from tickets where id = @id;", new { id = Id });
             dbConnection.Close();
             return ret;
         }

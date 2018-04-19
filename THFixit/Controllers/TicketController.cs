@@ -29,6 +29,7 @@ namespace THFixit.Controllers
             {
                 var tiketRepo = new TicketRepo(this.configuration);
                 var document = tiketRepo.FindById(ticket.Id);
+
                 ticket.DocNo = document.DocNo;
                 ticket.Id = document.Id;
                 ticket.PriorityId = document.PriorityId;
@@ -45,6 +46,8 @@ namespace THFixit.Controllers
                 ticket.Contact = document.Contact;
                 ticket.DocDate = document.CreatedAt.ToString("dd/MM/yyyy HH:mm");
                 ticket.SerialNumber = document.SerialNumber;
+                ticket.EquipmentName = document.EquipmentName;
+
                 var departRepo = new DepartRepo(this.configuration);
                 var buildingRepo = new BuildingRepo(this.configuration);
                 var classRepo = new ClassRepo(this.configuration);
