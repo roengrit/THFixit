@@ -38,7 +38,14 @@
     <ol class="breadcrumb">
         <li><a href="/"> Home</a></li>
         <li><a href="/Ticket/List">  Tickets</a></li>
-        <li class="active">Create</li>
+        @if (string.IsNullOrEmpty(Model.DocNo))
+        {
+          <li class="active">Create</li>
+        }
+        else
+        {
+          <li class="active">Edit</li>
+        }
     </ol>
 </section>
 <section class="content">
@@ -53,9 +60,33 @@
                     <div class="box-header">
                         @(string.IsNullOrEmpty(Model.DocNo) ? "" : "#" + Model.DocNo)
                         <div class="box-tools">
-                            <div class="input-group input-group-sm" @(string.IsNullOrEmpty(Model.DocNo) ? "style=display:none;" : "")>
-                                <a href="javascript:void(0)" class="btn btn-info btn-sm"> Action <i class="fa fa-plus"></i></a>
-                            </div>
+                            <div class="btn-group" @(string.IsNullOrEmpty(Model.DocNo) ? "style=display:none;" : "")>
+                                <button type="button" class="btn btn-info">Action</button>
+                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li><a href="#">Equipment/Machine</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Estimate</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Print Ticket</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Assignment </a></li>
+                                    <li><a href="#">Action Time </a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Prioritys</a></li>
+                                    <li><a href="#">Status</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Expenses</a></li>
+                                    <li><a href="#">Income</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Assessment</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Sub Ticket</a></li>
+                                </ul>
+                            </div>                            
                         </div>
                     </div>
                     <div class="box-body">
@@ -75,7 +106,7 @@
                             <div class="col-md-12">
                                 <label for="req-name">Register No/Machine No</label>
                                 <input asp-for="SerialNumber" required class="form-control" autocomplete="off" placeholder="Register No/Machine No" />
-                                <label for="req-name" id="MachineName" style="color:green;">@Model.EquipmentName</label>
+                                <label for="req-name" id="MachineName" style="color:green;margin-top:5px;">@Model.EquipmentName</label>
                             </div>
                         </div>
                     </div>
@@ -168,9 +199,8 @@
                 <div id="box-req" style="padding:10px;" class="panel panel-default">
                     <div class="box-header">
                         <div class="box-tools" style="margin:5px;">
-                            <div class="btn-group dropup">
-                                <a href="javascript:void(0)" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Refresh </a>
-                                <a href="javascript:void(0)" class="btn btn-info btn-sm"> Action <i class="fa fa-plus"></i></a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default">Refresh</button>
                             </div>
                         </div>
                     </div>
