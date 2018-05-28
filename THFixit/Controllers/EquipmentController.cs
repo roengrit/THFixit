@@ -42,5 +42,23 @@ namespace THFixit.Controllers
             var ret = eqRepo.FindBySerial(eq.SerialNumber, eq.BranchId);
             return Json(new { ok = (ret != null), item = ret });
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetEquipmentBySerialNumberOrNameJson(string q, int branchId)
+        {
+            var list = new List<Select2View>();
+            var eqRepo = new EquipmentRepo(this.configuration);
+             var listEquipment = eqRepo.FindBySerialNumberOrName(q, branchId).Select(x => new Select2View { id = x.SerialId.ToString(), text = "["+ x.SerialNumber + "] " + x.Name }).ToList();
+            if (listEquipment.Count>0)
+            {
+                if (string.IsNullOrEmpty(q))
+                {
+                    list.Add(new Select2View { id = "0", text = "Serial Number/Register Number/Machine Number" });
+                }
+                list.AddRange(listEquipment);
+            }
+            return Json(new { items = list });
+        }
     }
 }

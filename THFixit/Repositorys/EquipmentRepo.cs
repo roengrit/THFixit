@@ -62,5 +62,17 @@ namespace THFixit.Repositorys
             dbConnection.Close();
             return ret;
         }
+
+
+        public IEnumerable<Equipment> FindBySerialNumberOrName(string term, int branchId)
+        {
+            term = term ?? string.Empty;
+            DbHelper.OpenCon(ref dbConnection);
+            var ret = dbConnection.Query<Equipment>(
+                @"select equipments.*,equipment_serials.id as  serial_id , equipment_serials.serial_number from equipment_serials join equipments on equipment_serials.eq_id = equipments.id 
+                  where equipment_serials.branch_id = @branch_id and (lower(equipment_serials.serial_number) like lower(@term) or lower(equipments.name) like lower(@term)); ", new { term = "%" + term + "%", branch_id = branchId });
+            dbConnection.Close();
+            return ret;
+        }
     }
 }

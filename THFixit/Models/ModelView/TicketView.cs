@@ -16,6 +16,7 @@ namespace THFixit.Models.ModelView
         public string DocNo { get; set; }
         public string Title { get; set; }        
         public string Description { get; set; }
+        public string SerialId { get; set; }
         public string SerialNumber { get; set; }
         public string EquipmentCode { get; set; }
         public string EquipmentName { get; set; }

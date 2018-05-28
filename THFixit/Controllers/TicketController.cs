@@ -100,7 +100,7 @@ namespace THFixit.Controllers
                         RoomId = ticket.RoomId,
                         StatusId = ticket.StatusId,
                         Title = ticket.Title,
-                        SerialNumber = ticket.SerialNumber
+                        SerialId = ticket.SerialId
                     });
                 if (ticket.Ret.Ok)
                 {
@@ -123,7 +123,7 @@ namespace THFixit.Controllers
                         RequestorId = ticket.RequestorId,
                         RoomId = ticket.RoomId,
                         Title = ticket.Title,
-                        SerialNumber = ticket.SerialNumber
+                        SerialId = ticket.SerialId
                     });
             }
             return Json(ticket);

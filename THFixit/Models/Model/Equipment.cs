@@ -8,6 +8,8 @@ namespace THFixit.Models.Model
     public class Equipment
     {
         public int Id { get; set; }
+        public int SerialId { get; set; }
+        public string SerialNumber { get; set; }
         public bool IsLock { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }

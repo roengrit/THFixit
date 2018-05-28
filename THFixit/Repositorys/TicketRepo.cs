@@ -34,7 +34,8 @@ namespace THFixit.Repositorys
             var ret = dbConnection.QueryFirstOrDefault<Ticket>(
                 @"select *,
                          (select name from users where id = requestor_id) as requestor_name,
-                         (select equipments.name from equipment_serials join equipments on equipment_serials.eq_id = equipments.id where equipment_serials.serial_number = tickets.serial_number  ) as equipment_name
+                         (select equipment_serials.serial_number from equipment_serials where equipment_serials.id = tickets.serial_id  ) as serial_number,
+                         (select equipments.name from equipment_serials join equipments on equipment_serials.eq_id = equipments.id where equipment_serials.id = tickets.serial_id  ) as equipment_name
                   from tickets where id = @id;", new { id = Id });
             dbConnection.Close();
             return ret;
@@ -46,8 +47,8 @@ namespace THFixit.Repositorys
             try
             {
                 var ret = dbConnection.Execute(
-                    @"insert into tickets(doc_no,title,description,serial_number,branch_id,depart_id,building_id,room_id,class_id,priority_id,status_id,contact,requestor_id,creator_id,created_at)
-                                  values(@doc_no,@title,@description,@serial_number,@branch_id,@depart_id,@building_id,@room_id,@class_id,@priority_id,@status_id,@contact,@requestor_id,@creator_id,current_timestamp);
+                    @"insert into tickets(doc_no,title,description,serial_id,branch_id,depart_id,building_id,room_id,class_id,priority_id,status_id,contact,requestor_id,creator_id,created_at)
+                                  values(@doc_no,@title,@description,@serial_id,@branch_id,@depart_id,@building_id,@room_id,@class_id,@priority_id,@status_id,@contact,@requestor_id,@creator_id,current_timestamp);
                     ",
                                                  new
                                                  {
@@ -65,7 +66,7 @@ namespace THFixit.Repositorys
                                                      contact = Ticket.Contact,
                                                      requestor_id = Ticket.RequestorId,
                                                      creator_id = Ticket.CreatorId,
-                                                     serial_number = Ticket.SerialNumber
+                                                     serial_id = Ticket.SerialId
                                                  });
                 dbConnection.Close();
                 return new Ret { Ok = true, Message = "Success" , Id = ret};
@@ -85,7 +86,7 @@ namespace THFixit.Repositorys
                 var ret = dbConnection.Execute(
                     @"update tickets set title = @title,
                                          description = @description,
-                                         serial_number = @serial_number,
+                                         serial_id = @serial_id,
                                          depart_id = @depart_id ,
                                          building_id = @building_id ,
                                          room_id = @building_id ,
@@ -106,7 +107,7 @@ namespace THFixit.Repositorys
                                                      contact = Ticket.Contact,
                                                      requestor_id = Ticket.RequestorId,
                                                      editor_id = Ticket.EditorId,
-                                                     serial_number = Ticket.SerialNumber
+                                                     serial_id = Ticket.SerialId
                                                  });
                 dbConnection.Close();
                 return new Ret { Ok = true, Message = "Success", Id = ret };

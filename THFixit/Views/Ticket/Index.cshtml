@@ -60,31 +60,28 @@
                     <div class="box-header">
                         @(string.IsNullOrEmpty(Model.DocNo) ? "" : "#" + Model.DocNo)
                         <div class="box-tools">
-                            <div class="btn-group" @(string.IsNullOrEmpty(Model.DocNo) ? "style=display:none;" : "")>
-                                <button type="button" class="btn btn-info">Action</button>
+                            <div class="btn-group" @(string.IsNullOrEmpty(Model.DocNo) ? "style=display:none;" : "")>                                 
                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Action
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="#">Equipment/Machine</a></li>
-                                    <li class="divider"></li>
                                     <li><a href="#">Estimate</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Print Ticket</a></li>
+                                    <li><a href="#">Appointment</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#">Assignment </a></li>
+                                    <li><a href="#">Print Ticket</a></li>
+                                    <li class="divider"></li>
                                     <li><a href="#">Action Time </a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Prioritys</a></li>
-                                    <li><a href="#">Status</a></li>
+                                    <li><a href="#">Change prioritys</a></li>
+                                    <li><a href="#">Change status</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#">Expenses</a></li>
-                                    <li><a href="#">Income</a></li>
                                     <li class="divider"></li>
                                     <li><a href="#">Assessment</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Sub Ticket</a></li>
                                 </ul>
                             </div>                            
                         </div>
@@ -104,9 +101,10 @@
                         </div>
                         <div class="row form-group-ex">
                             <div class="col-md-12">
-                                <label for="req-name">Register No/Machine No</label>
-                                <input asp-for="SerialNumber" required class="form-control" autocomplete="off" placeholder="Register No/Machine No" />
-                                <label for="req-name" id="MachineName" style="color:green;margin-top:5px;">@Model.EquipmentName</label>
+                                <label for="req-name">Serial Number/Register Number/Machine Number</label>
+                                <select asp-for="SerialId" class="form-control" required autocomplete="off">
+                                    @Html.Raw((string.IsNullOrEmpty(Model.DocNo) ? "<option value='0'>Serial Number/Register Number/Machine Number</option>" : "<option value='" + Model.SerialId + "'>[" + Model.SerialNumber +"] " + Model.EquipmentName + "</option>"))
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -325,34 +323,77 @@
     </form>
 </section>
 
+<div class="modal bs-modal-lg fade" id="equipment-default">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i> Change equipment or machine</h4>
+            </div>
+            <div class="modal-body">
+                <select class="form-control select2" >
+                    <option> Group1</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" id="save-change-equipment" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
 @section Scripts{
     <script>
 
-        $('#SerialNumber').keyup(function () {
-            var requestData = {
-                BranchId: $('#BranchId').val(),
-                SerialNumber : $(this).val()
-            };
-            $.ajax({
-                url: '/Equipment/GetEquipmentBySnJson',
-                type: 'POST',
-                data: JSON.stringify(requestData),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
-                    alert('Error: ' + xhr.statusText);
+        //$('#SerialNumber').keyup(function () {
+        //    var requestData = {
+        //        BranchId: $('#BranchId').val(),
+        //        SerialNumber : $(this).val()
+        //    };
+        //    $.ajax({
+        //        url: '/Equipment/GetEquipmentBySnJson',
+        //        type: 'POST',
+        //        data: JSON.stringify(requestData),
+        //        dataType: 'json',
+        //        contentType: 'application/json; charset=utf-8',
+        //        error: function (xhr) {
+        //            alert('Error: ' + xhr.statusText);
+        //        },
+        //        success: function (result) {
+        //            if (result.ok) {
+        //                $('#SerialNumber').addClass("found-text");
+        //                $('#MachineName').html(result.item.name)
+        //            } else {
+        //                $('#SerialNumber').removeClass("found-text");
+        //                $('#MachineName').html('');
+        //            }
+        //        },
+        //        async: true,
+        //        processData: false
+        //    }); 
+        //});
+
+        $('#SerialId').select2({
+            ajax: {
+                url: '/Equipment/GetEquipmentBySerialNumberOrNameJson',
+                width: 'resolve',
+                data: function (params) {
+                    return {
+                        q: params.term, branchId: $('#BranchId').val()
+                    };
                 },
-                success: function (result) {
-                    if (result.ok) {
-                        $('#SerialNumber').addClass("found-text");
-                        $('#MachineName').html(result.item.name)
-                    } else {
-                        $('#SerialNumber').removeClass("found-text");
-                    }
-                },
-                async: true,
-                processData: false
-            }); 
+                processResults: function (data) {
+                    return {
+                        results: data.items
+                    };
+                }
+            }
         });
 
         $('#RequestorId').select2({
@@ -734,6 +775,9 @@
                         if ($('#DocNo').val() == '') {
                             setTimeout(function () { window.location.href = '/Ticket/?id=' + result.id; }, 1500);
                         } 
+                        if ($('#SerialNumber').val() == '') {
+                            $('#MachineName').html('');
+                        }
                     });
                 } else {
                     $('.loading-wait').fadeOut(1000, function () {

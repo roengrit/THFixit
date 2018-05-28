@@ -16,6 +16,7 @@ namespace THFixit.Models.Model
         public string Description { get; set; }
         public Int32 RequestorId { get; set; }
         public string RequestorName { get; set; }
+        public string SerialId  { get; set; }
         public string SerialNumber { get; set; }
         public string EquipmentCode { get; set; }
         public string EquipmentName { get; set; }
